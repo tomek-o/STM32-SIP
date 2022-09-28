@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<EmBitz_workspace_file>
+	<Workspace title="softphone">
+		<Project filename="re/re.ebp" />
+		<Project filename="rem/rem.ebp" />
+		<Project filename="baresip/baresip.ebp" />
+		<Project filename="speex/build/speex.ebp" />
+		<Project filename="g722/g722.ebp" />
+		<Project filename="softphone/softphone.ebp" active="1">
+			<Depends filename="re/re.ebp" />
+			<Depends filename="rem/rem.ebp" />
+			<Depends filename="baresip/baresip.ebp" />
+			<Depends filename="speex/build/speex.ebp" />
+			<Depends filename="g722/g722.ebp" />
+		</Project>
+	</Workspace>
+</EmBitz_workspace_file>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<EmBitz_layout_file>
+	<ActiveTarget name="Debug" />
+	<File name="..\libspeex\cb_search.c" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="15415" topLine="530" />
+		</Cursor>
+	</File>
+	<File name="..\libspeex\math_approx.h" open="1" top="0" tabpos="26" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="4409" topLine="164" />
+		</Cursor>
+	</File>
+	<File name="..\libspeex\resample.c" open="0" top="0" tabpos="21" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="10473" topLine="263" />
+		</Cursor>
+	</File>
+</EmBitz_layout_file>

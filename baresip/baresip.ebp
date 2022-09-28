@@ -1,0 +1,290 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<EmBitz_project_file>
+	<EmBitzVersion release="1.11" revision="0" />
+	<FileVersion major="1" minor="0" />
+	<Project>
+		<Option title="baresip" />
+		<Option pch_mode="2" />
+		<Option compiler="armgcc_eb" />
+		<Build>
+			<Target title="Debug">
+				<Option output="bin\Debug\baresip.a" />
+				<Option object_output="obj\Debug\" />
+				<Option type="1" />
+				<Option compiler="armgcc_eb" />
+				<Option projectDeviceOptionsRelation="0" />
+				<Compiler>
+					<Add option="-g3" />
+					<Add option="-O0" />
+					<Add option="-Wall" />
+					<Add option="-fdata-sections" />
+					<Add option="-ffunction-sections" />
+				</Compiler>
+				<Cpp>
+					<Add option="-g3" />
+					<Add option="-O0" />
+					<Add option="-Wall" />
+					<Add option="-fdata-sections" />
+					<Add option="-ffunction-sections" />
+				</Cpp>
+				<Assembler>
+					<Add option="-Wa,--gdwarf-2" />
+				</Assembler>
+				<Linker>
+					<Add option="-Wl,--gc-sections" />
+				</Linker>
+			</Target>
+			<Target title="Release">
+				<Option output="bin\Release\baresip.a" />
+				<Option object_output="obj\Release\" />
+				<Option type="1" />
+				<Option compiler="armgcc_eb" />
+				<Option projectDeviceOptionsRelation="0" />
+				<Compiler>
+					<Add option="-O2" />
+					<Add option="-g2" />
+					<Add option="-fdata-sections" />
+					<Add option="-ffunction-sections" />
+				</Compiler>
+				<Cpp>
+					<Add option="-O2" />
+					<Add option="-g2" />
+					<Add option="-fdata-sections" />
+					<Add option="-ffunction-sections" />
+				</Cpp>
+				<Assembler>
+					<Add option="-Wa,--no-warn" />
+				</Assembler>
+				<Linker>
+					<Add option="-Wl,--gc-sections" />
+				</Linker>
+			</Target>
+		</Build>
+		<Device>
+			<Add option="$device=cortex-m4" />
+			<Add option="$fpu=fpv4-sp-d16" />
+			<Add option="$stack=0x0100" />
+			<Add option="$heap=0x0000" />
+		</Device>
+		<Compiler>
+			<Add option="-mfloat-abi=hard" />
+			<Add option="-fno-strict-aliasing" />
+			<Add symbol="ARM_MATH_CM4" />
+			<Add symbol="__FPU_USED" />
+			<Add symbol="STM32F429ZI" />
+			<Add symbol="STM32F4XX" />
+			<Add symbol="_ANSI_SOURCE" />
+			<Add symbol="_TIMEVAL_DEFINED" />
+			<Add symbol="FREERTOS_STM32" />
+			<Add symbol="STATIC" />
+			<Add directory=".\inc" />
+			<Add directory=".\src" />
+			<Add directory="..\re\inc" />
+			<Add directory="..\rem\inc" />
+			<Add directory="..\softphone\LwIP\src\include" />
+			<Add directory="..\softphone\LwIP\system" />
+			<Add directory="..\softphone\LwIP\src\include\posix" />
+			<Add directory="..\softphone\LwIP\src\include\ipv4" />
+			<Add directory="..\speex\include" />
+			<Add directory="..\g722" />
+			<Add directory="..\" />
+		</Compiler>
+		<Linker>
+			<Add option="-eb_lib=n" />
+			<Add option="-eb_start_files" />
+		</Linker>
+		<Unit filename="inc\baresip.h" />
+		<Unit filename="inc\baresip_dialog_info_direction.h" />
+		<Unit filename="inc\baresip_dialog_info_status.h" />
+		<Unit filename="inc\baresip_presence_status.h" />
+		<Unit filename="inc\baresip_recorder.h" />
+		<Unit filename="inc\baresip_zrtp.h" />
+		<Unit filename="inc\module.h" />
+		<Unit filename="modules\audio_dac\audio_dac.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="modules\dialog_info\dialog_info.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="modules\dialog_info\dialog_info.h" />
+		<Unit filename="modules\dialog_info\dialog_info_subscriber.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="modules\g711\g711.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="modules\g722\g722.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="modules\l16\l16.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="modules\mwi\mwi.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="modules\nullaudio_no_thread\nullaudio_no_thread.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="modules\nullaudio_no_thread\nullaudio_no_thread_internal.h" />
+		<Unit filename="modules\nullaudio_no_thread\nullaudio_no_thread_play.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="modules\nullaudio_no_thread\nullaudio_no_thread_src.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="modules\presence\notifier.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="modules\presence\presence.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="modules\presence\presence.h" />
+		<Unit filename="modules\presence\subscriber.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="modules\softvol\agc.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="modules\softvol\agc.h" />
+		<Unit filename="modules\softvol\softvol.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="modules\speex_aec\speex_aec.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="modules\speex_pp\speex_pp.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="modules\stun\stun.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\account.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\aucodec.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\audio.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\aufilt.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\auplay.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\ausrc.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\call.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\cmd.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\conf.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\config.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\contact.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\core.h" />
+		<Unit filename="src\dtmf.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\dtmf.h" />
+		<Unit filename="src\magic.h" />
+		<Unit filename="src\mctrl.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\menc.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\message.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\mnat.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\module.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\net.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\paging_tx.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\play.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\reg.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\rtpkeep.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\sdp.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\sipreq.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\static.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\stream.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\tone_generator.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\tone_generator.h" />
+		<Unit filename="src\ua.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Extensions>
+			<code_completion />
+			<debugger>
+				<target_debugging_settings target="Release" active_interface="ST-link">
+					<debug_interface interface_id="ST-link" ip_address="localhost" ip_port="4242" path="${EMBITZ}\share\contrib" executable="STLinkGDB.exe" description="" dont_start_server="false" backoff_time="1000" options="0" reg_filter="0" active_family="STMicroelectronics" gdb_before_conn="" gdb_after_conn="">
+						<family_options family_id="STMicroelectronics">
+							<option opt_id="ID_JTAG_SWD" opt_value="swd" />
+							<option opt_id="ID_VECTOR_START" opt_value="0x08000000" />
+							<option opt_id="ID_RESET_TYPE" opt_value="System" />
+							<option opt_id="ID_LOAD_PROGRAM" opt_value="1" />
+							<option opt_id="ID_SEMIHOST_CHECK" opt_value="0" />
+							<option opt_id="ID_RAM_EXEC" opt_value="0" />
+							<option opt_id="ID_VEC_TABLE" opt_value="1" />
+							<option opt_id="ID_DONT_CONN_RESET" opt_value="0" />
+							<option opt_id="ID_ALL_MODE_DEBUG" opt_value="0" />
+							<option opt_id="ID_DEV_ADDR" opt_value="" />
+							<option opt_id="ID_VERBOSE_LEVEL" opt_value="3" />
+						</family_options>
+					</debug_interface>
+				</target_debugging_settings>
+				<target_debugging_settings target="Debug" active_interface="ST-link">
+					<debug_interface interface_id="ST-link" ip_address="localhost" ip_port="4242" path="${EMBITZ}\share\contrib" executable="STLinkGDB.exe" description="" dont_start_server="false" backoff_time="1000" options="0" reg_filter="0" active_family="STMicroelectronics" gdb_before_conn="" gdb_after_conn="">
+						<family_options family_id="STMicroelectronics">
+							<option opt_id="ID_JTAG_SWD" opt_value="swd" />
+							<option opt_id="ID_VECTOR_START" opt_value="0x08000000" />
+							<option opt_id="ID_RESET_TYPE" opt_value="System" />
+							<option opt_id="ID_LOAD_PROGRAM" opt_value="1" />
+							<option opt_id="ID_SEMIHOST_CHECK" opt_value="0" />
+							<option opt_id="ID_RAM_EXEC" opt_value="0" />
+							<option opt_id="ID_VEC_TABLE" opt_value="1" />
+							<option opt_id="ID_DONT_CONN_RESET" opt_value="0" />
+							<option opt_id="ID_ALL_MODE_DEBUG" opt_value="0" />
+							<option opt_id="ID_DEV_ADDR" opt_value="" />
+							<option opt_id="ID_VERBOSE_LEVEL" opt_value="3" />
+						</family_options>
+					</debug_interface>
+				</target_debugging_settings>
+			</debugger>
+			<envvars />
+		</Extensions>
+	</Project>
+</EmBitz_project_file>

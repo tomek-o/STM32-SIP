@@ -1,0 +1,605 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<EmBitz_project_file>
+	<EmBitzVersion release="1.11" revision="0" />
+	<FileVersion major="1" minor="0" />
+	<Project>
+		<Option title="re" />
+		<Option pch_mode="2" />
+		<Option compiler="armgcc_eb" />
+		<Build>
+			<Target title="Debug">
+				<Option output="bin\Debug\re.a" />
+				<Option object_output="obj\Debug\" />
+				<Option type="1" />
+				<Option compiler="armgcc_eb" />
+				<Option projectDeviceOptionsRelation="0" />
+				<Compiler>
+					<Add option="-g3" />
+					<Add option="-O0" />
+					<Add option="-Wall" />
+					<Add option="-fdata-sections" />
+					<Add option="-ffunction-sections" />
+				</Compiler>
+				<Cpp>
+					<Add option="-g3" />
+					<Add option="-O0" />
+					<Add option="-Wall" />
+					<Add option="-fdata-sections" />
+					<Add option="-ffunction-sections" />
+				</Cpp>
+				<Assembler>
+					<Add option="-Wa,--gdwarf-2" />
+				</Assembler>
+				<Linker>
+					<Add option="-Wl,--gc-sections" />
+				</Linker>
+			</Target>
+			<Target title="Release">
+				<Option output="bin\Release\re.a" />
+				<Option object_output="obj\Release\" />
+				<Option type="1" />
+				<Option compiler="armgcc_eb" />
+				<Option projectDeviceOptionsRelation="0" />
+				<Compiler>
+					<Add option="-O2" />
+					<Add option="-g2" />
+					<Add option="-fdata-sections" />
+					<Add option="-ffunction-sections" />
+				</Compiler>
+				<Cpp>
+					<Add option="-O2" />
+					<Add option="-g2" />
+					<Add option="-fdata-sections" />
+					<Add option="-ffunction-sections" />
+				</Cpp>
+				<Assembler>
+					<Add option="-Wa,--no-warn" />
+				</Assembler>
+				<Linker>
+					<Add option="-Wl,--gc-sections" />
+				</Linker>
+			</Target>
+		</Build>
+		<Device>
+			<Add option="$device=cortex-m4" />
+			<Add option="$fpu=fpv4-sp-d16" />
+			<Add option="$stack=0x0100" />
+			<Add option="$heap=0x0000" />
+		</Device>
+		<Compiler>
+			<Add option="-mfloat-abi=hard" />
+			<Add option="-fno-strict-aliasing" />
+			<Add symbol="ARM_MATH_CM4" />
+			<Add symbol="__FPU_USED" />
+			<Add symbol="STM32F429ZI" />
+			<Add symbol="STM32F4XX" />
+			<Add symbol="STM32F429xx" />
+			<Add symbol="STM32F4" />
+			<Add symbol="_ANSI_SOURCE" />
+			<Add symbol="_TIMEVAL_DEFINED" />
+			<Add symbol="HAVE_STRINGS_H" />
+			<Add symbol="HAVE_SELECT" />
+			<Add directory=".\inc" />
+			<Add directory=".\src" />
+			<Add directory="..\softphone\LwIP\src\include\posix" />
+			<Add directory="..\softphone\LwIP\src\include" />
+			<Add directory="..\softphone\LwIP\system" />
+			<Add directory="..\softphone\LwIP\src\include\ipv4" />
+			<Add directory="..\softphone\STM32F4xx_HAL_Driver\Inc" />
+			<Add directory="..\softphone\inc" />
+			<Add directory="..\softphone\CMSIS\Device\ST\STM32F4xx\Include" />
+			<Add directory="..\softphone\FreeRTOS\Source\include" />
+			<Add directory="..\softphone\FreeRTOS\Source\portable\GCC\ARM_CM4F" />
+		</Compiler>
+		<Linker>
+			<Add option="-eb_lib=n" />
+			<Add option="-eb_start_files" />
+		</Linker>
+		<Unit filename="inc\re.h" />
+		<Unit filename="inc\re_aes.h" />
+		<Unit filename="inc\re_base64.h" />
+		<Unit filename="inc\re_bfcp.h" />
+		<Unit filename="inc\re_bitv.h" />
+		<Unit filename="inc\re_conf.h" />
+		<Unit filename="inc\re_crc32.h" />
+		<Unit filename="inc\re_dbg.h" />
+		<Unit filename="inc\re_dns.h" />
+		<Unit filename="inc\re_fmt.h" />
+		<Unit filename="inc\re_hash.h" />
+		<Unit filename="inc\re_hmac.h" />
+		<Unit filename="inc\re_http.h" />
+		<Unit filename="inc\re_httpauth.h" />
+		<Unit filename="inc\re_ice.h" />
+		<Unit filename="inc\re_jbuf.h" />
+		<Unit filename="inc\re_list.h" />
+		<Unit filename="inc\re_lock.h" />
+		<Unit filename="inc\re_main.h" />
+		<Unit filename="inc\re_mbuf.h" />
+		<Unit filename="inc\re_md5.h" />
+		<Unit filename="inc\re_mem.h" />
+		<Unit filename="inc\re_mod.h" />
+		<Unit filename="inc\re_mqueue.h" />
+		<Unit filename="inc\re_msg.h" />
+		<Unit filename="inc\re_natbd.h" />
+		<Unit filename="inc\re_net.h" />
+		<Unit filename="inc\re_rtp.h" />
+		<Unit filename="inc\re_sa.h" />
+		<Unit filename="inc\re_sdp.h" />
+		<Unit filename="inc\re_sha.h" />
+		<Unit filename="inc\re_sip.h" />
+		<Unit filename="inc\re_sipevent.h" />
+		<Unit filename="inc\re_sipreg.h" />
+		<Unit filename="inc\re_sipsess.h" />
+		<Unit filename="inc\re_srtp.h" />
+		<Unit filename="inc\re_stun.h" />
+		<Unit filename="inc\re_sxmlc.h" />
+		<Unit filename="inc\re_sxmlsearch.h" />
+		<Unit filename="inc\re_sys.h" />
+		<Unit filename="inc\re_tcp.h" />
+		<Unit filename="inc\re_telev.h" />
+		<Unit filename="inc\re_tls.h" />
+		<Unit filename="inc\re_tmr.h" />
+		<Unit filename="inc\re_turn.h" />
+		<Unit filename="inc\re_types.h" />
+		<Unit filename="inc\re_udp.h" />
+		<Unit filename="inc\re_uri.h" />
+		<Unit filename="src\base64\b64.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\crc32\crc32.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\dbg\dbg.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\dns\client.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\dns\cstr.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\dns\dname.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\dns\dns.h" />
+		<Unit filename="src\dns\dns_hdr.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\dns\ns.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\dns\rr.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\dns\rrlist.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\fmt\ch.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\fmt\hexdump.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\fmt\pl.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\fmt\print.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\fmt\prm.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\fmt\regex.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\fmt\str.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\fmt\str_error.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\fmt\time.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\hash\func.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\hash\hash.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\hmac\hmac.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\hmac\hmac_sha1.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\httpauth\basic.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\httpauth\digest.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\jbuf\jbuf.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\list\list.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\lock\freertos\freertos_lock.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\main\init.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\main\main.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\main\main.h" />
+		<Unit filename="src\main\method.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\mbuf\mbuf.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\md5\md5.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\md5\md5.h" />
+		<Unit filename="src\md5\wrap.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\mem\mem.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\mod\mod.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\msg\ctype.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\msg\msg_param.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\natbd\filtering.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\natbd\genalg.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\natbd\hairpinning.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\natbd\lifetime.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\natbd\mapping.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\natbd\natstr.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\net\if.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\net\lwip\lif.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\net\net.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\net\net_sock.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\net\netstr.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\net\rt.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\net\sockopt.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\rtp\fb.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\rtp\member.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\rtp\ntp.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\rtp\pkt.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\rtp\rtcp.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\rtp\rtcp.h" />
+		<Unit filename="src\rtp\rtp.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\rtp\rtp_rr.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\rtp\sdes.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\rtp\sess.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\rtp\source.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\sa\ntop.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\sa\printaddr.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\sa\pton.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\sa\sa.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\sdp\format.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\sdp\media.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\sdp\sdp.h" />
+		<Unit filename="src\sdp\sdp_attr.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\sdp\sdp_msg.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\sdp\sdp_str.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\sdp\session.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\sha\sha1.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\sip\addr.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\sip\auth.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\sip\cseq.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\sip\ctrans.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\sip\dialog.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\sip\keepalive.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\sip\keepalive_udp.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\sip\reply.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\sip\request.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\sip\sip.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\sip\sip.h" />
+		<Unit filename="src\sip\sip_access_url.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\sip\sip_alert_info.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\sip\sip_call_info.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\sip\sip_msg.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\sip\sip_transp.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\sip\strans.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\sip\via.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\sipevent\notify.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\sipevent\sipevent.h" />
+		<Unit filename="src\sipevent\sipevent_listen.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\sipevent\sipevent_msg.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\sipevent\subscribe.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\sipreg\reg.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\sipsess\accept.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\sipsess\ack.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\sipsess\close.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\sipsess\connect.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\sipsess\info.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\sipsess\listen.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\sipsess\modify.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\sipsess\sip_sess.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\sipsess\sipsess.h" />
+		<Unit filename="src\sipsess\sipsess_reply.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\sipsess\sipsess_request.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\srtp\misc.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\srtp\replay.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\srtp\srtcp.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\srtp\srtp.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\srtp\srtp.h" />
+		<Unit filename="src\srtp\stream.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\stun\dnsdisc.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\stun\stun.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\stun\stun.h" />
+		<Unit filename="src\stun\stun_addr.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\stun\stun_attr.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\stun\stun_ctrans.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\stun\stun_hdr.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\stun\stun_ind.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\stun\stun_keepalive.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\stun\stun_msg.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\stun\stun_rep.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\stun\stun_req.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\stun\stunstr.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\sxmlc\sxmlc.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\sxmlc\sxmlsearch.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\sys\endian.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\sys\gettimeofday.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\sys\rand.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\sys\sys.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\sys\sys_time.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\tcp\tcp.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\tcp\tcp_high.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\telev\telev.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\tmr\tmr.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\udp\udp.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\uri\ucmp.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\uri\uri.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\uri\uric.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Extensions>
+			<code_completion />
+			<debugger>
+				<target_debugging_settings target="Debug" active_interface="ST-link">
+					<debug_interface interface_id="ST-link" ip_address="localhost" ip_port="4242" path="${EMBITZ}\share\contrib" executable="STLinkGDB.exe" description="" dont_start_server="false" backoff_time="1000" options="0" reg_filter="0" active_family="STMicroelectronics" gdb_before_conn="" gdb_after_conn="">
+						<family_options family_id="STMicroelectronics">
+							<option opt_id="ID_JTAG_SWD" opt_value="swd" />
+							<option opt_id="ID_VECTOR_START" opt_value="0x08000000" />
+							<option opt_id="ID_RESET_TYPE" opt_value="System" />
+							<option opt_id="ID_LOAD_PROGRAM" opt_value="1" />
+							<option opt_id="ID_SEMIHOST_CHECK" opt_value="0" />
+							<option opt_id="ID_RAM_EXEC" opt_value="0" />
+							<option opt_id="ID_VEC_TABLE" opt_value="1" />
+							<option opt_id="ID_DONT_CONN_RESET" opt_value="0" />
+							<option opt_id="ID_ALL_MODE_DEBUG" opt_value="0" />
+							<option opt_id="ID_DEV_ADDR" opt_value="" />
+							<option opt_id="ID_VERBOSE_LEVEL" opt_value="3" />
+						</family_options>
+					</debug_interface>
+				</target_debugging_settings>
+				<target_debugging_settings target="Release" active_interface="ST-link">
+					<debug_interface interface_id="ST-link" ip_address="localhost" ip_port="4242" path="${EMBITZ}\share\contrib" executable="STLinkGDB.exe" description="" dont_start_server="false" backoff_time="1000" options="0" reg_filter="0" active_family="STMicroelectronics" gdb_before_conn="" gdb_after_conn="">
+						<family_options family_id="STMicroelectronics">
+							<option opt_id="ID_JTAG_SWD" opt_value="swd" />
+							<option opt_id="ID_VECTOR_START" opt_value="0x08000000" />
+							<option opt_id="ID_RESET_TYPE" opt_value="System" />
+							<option opt_id="ID_LOAD_PROGRAM" opt_value="1" />
+							<option opt_id="ID_SEMIHOST_CHECK" opt_value="0" />
+							<option opt_id="ID_RAM_EXEC" opt_value="0" />
+							<option opt_id="ID_VEC_TABLE" opt_value="1" />
+							<option opt_id="ID_DONT_CONN_RESET" opt_value="0" />
+							<option opt_id="ID_ALL_MODE_DEBUG" opt_value="0" />
+							<option opt_id="ID_DEV_ADDR" opt_value="" />
+							<option opt_id="ID_VERBOSE_LEVEL" opt_value="3" />
+						</family_options>
+					</debug_interface>
+				</target_debugging_settings>
+			</debugger>
+			<envvars />
+		</Extensions>
+	</Project>
+</EmBitz_project_file>

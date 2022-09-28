@@ -1,0 +1,638 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<EmBitz_project_file>
+	<EmBitzVersion release="1.11" revision="0" />
+	<FileVersion major="1" minor="0" />
+	<Project>
+		<Option title="softphone" />
+		<Option pch_mode="2" />
+		<Option compiler="armgcc_eb" />
+		<Build>
+			<Target title="Debug">
+				<Option output="$(PROJECT_DIR)\bin\Debug\softphone.elf" />
+				<Option object_output="obj\Debug\" />
+				<Option type="0" />
+				<Option create_hex="1" />
+				<Option compiler="armgcc_eb" />
+				<Option projectDeviceOptionsRelation="0" />
+				<Option projectLinkerOptionsRelation="2" />
+				<Compiler>
+					<Add option="-Wall" />
+					<Add option="-fdata-sections" />
+					<Add option="-ffunction-sections" />
+					<Add option="-O0" />
+					<Add option="-g3" />
+				</Compiler>
+				<Cpp>
+					<Add option="-Wall" />
+					<Add option="-fdata-sections" />
+					<Add option="-ffunction-sections" />
+					<Add option="-O0" />
+					<Add option="-g3" />
+				</Cpp>
+				<Assembler>
+					<Add option="-Wa,--gdwarf-2" />
+				</Assembler>
+				<Linker>
+					<Add option="-Wl,--gc-sections" />
+					<Add library="..\baresip\bin\Debug\baresip.a" />
+					<Add library="..\rem\bin\Debug\rem.a" />
+					<Add library="..\re\bin\Debug\re.a" />
+					<Add library="..\g722\bin\Debug\g722.a" />
+					<Add library="..\speex\build\bin\Debug\speex.a" />
+					<Add library="libm.a" />
+				</Linker>
+			</Target>
+			<Target title="Release">
+				<Option output="$(PROJECT_DIR)\bin\Release\softphone.elf" />
+				<Option object_output="obj\Release\" />
+				<Option type="0" />
+				<Option create_hex="1" />
+				<Option compiler="armgcc_eb" />
+				<Option projectDeviceOptionsRelation="0" />
+				<Compiler>
+					<Add option="-O2" />
+					<Add option="-g2" />
+					<Add option="-fdata-sections" />
+					<Add option="-ffunction-sections" />
+				</Compiler>
+				<Cpp>
+					<Add option="-O2" />
+					<Add option="-g2" />
+					<Add option="-fdata-sections" />
+					<Add option="-ffunction-sections" />
+				</Cpp>
+				<Assembler>
+					<Add option="-Wa,--no-warn" />
+				</Assembler>
+				<Linker>
+					<Add option="-Wl,--gc-sections" />
+				</Linker>
+			</Target>
+		</Build>
+		<Device>
+			<Add option="$device=cortex-m4" />
+			<Add option="$fpu=fpv4-sp-d16" />
+			<Add option="$lscript=./stm32f429zi_flash.ld" />
+			<Add option="$stack=0x0800" />
+			<Add option="$heap=0x2000" />
+		</Device>
+		<Compiler>
+			<Add option="-mfloat-abi=hard" />
+			<Add option="-fno-strict-aliasing" />
+			<Add symbol="ARM_MATH_CM4" />
+			<Add symbol="STM32F429ZI" />
+			<Add symbol="STM32F4XX" />
+			<Add symbol="STM32F429xx" />
+			<Add symbol="STM32F4" />
+			<Add symbol="_ANSI_SOURCE" />
+			<Add symbol="_TIMEVAL_DEFINED" />
+			<Add directory=".\inc" />
+			<Add directory=".\src" />
+			<Add directory=".\cmsis" />
+			<Add directory="LwIP\src\include" />
+			<Add directory="LwIP\system" />
+			<Add directory="LwIP\src\include\ipv4" />
+			<Add directory="STM32F4xx_HAL_Driver\Inc" />
+			<Add directory="..\re\inc" />
+			<Add directory="..\rem\inc" />
+			<Add directory="..\baresip\inc" />
+		</Compiler>
+		<Linker>
+			<Add option="-eb_lib=n" />
+			<Add option="-eb_start_files" />
+		</Linker>
+		<Unit filename="BSP\stm32f4xx_nucleo_144.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="BSP\stm32f4xx_nucleo_144.h" />
+		<Unit filename="CMSIS\Device\ST\STM32F4xx\Include\stm32f429xx.h" />
+		<Unit filename="CMSIS\Device\ST\STM32F4xx\Include\stm32f4xx.h" />
+		<Unit filename="CMSIS\Device\ST\STM32F4xx\Include\system_stm32f4xx.h" />
+		<Unit filename="CMSIS\Include\arm_common_tables.h" />
+		<Unit filename="CMSIS\Include\arm_const_structs.h" />
+		<Unit filename="CMSIS\Include\arm_math.h" />
+		<Unit filename="CMSIS\Include\cmsis_armcc.h" />
+		<Unit filename="CMSIS\Include\cmsis_armcc_V6.h" />
+		<Unit filename="CMSIS\Include\cmsis_gcc.h" />
+		<Unit filename="CMSIS\Include\core_cm4.h" />
+		<Unit filename="CMSIS\Include\core_cmFunc.h" />
+		<Unit filename="CMSIS\Include\core_cmInstr.h" />
+		<Unit filename="CMSIS\Include\core_cmSimd.h" />
+		<Unit filename="FreeRTOS\Source\CMSIS_RTOS\cmsis_os.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="FreeRTOS\Source\CMSIS_RTOS\cmsis_os.h" />
+		<Unit filename="FreeRTOS\Source\croutine.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="FreeRTOS\Source\event_groups.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="FreeRTOS\Source\include\atomic.h" />
+		<Unit filename="FreeRTOS\Source\include\croutine.h" />
+		<Unit filename="FreeRTOS\Source\include\deprecated_definitions.h" />
+		<Unit filename="FreeRTOS\Source\include\event_groups.h" />
+		<Unit filename="FreeRTOS\Source\include\FreeRTOS.h" />
+		<Unit filename="FreeRTOS\Source\include\list.h" />
+		<Unit filename="FreeRTOS\Source\include\message_buffer.h" />
+		<Unit filename="FreeRTOS\Source\include\mpu_prototypes.h" />
+		<Unit filename="FreeRTOS\Source\include\mpu_wrappers.h" />
+		<Unit filename="FreeRTOS\Source\include\portable.h" />
+		<Unit filename="FreeRTOS\Source\include\projdefs.h" />
+		<Unit filename="FreeRTOS\Source\include\queue.h" />
+		<Unit filename="FreeRTOS\Source\include\semphr.h" />
+		<Unit filename="FreeRTOS\Source\include\stack_macros.h" />
+		<Unit filename="FreeRTOS\Source\include\StackMacros.h" />
+		<Unit filename="FreeRTOS\Source\include\stream_buffer.h" />
+		<Unit filename="FreeRTOS\Source\include\task.h" />
+		<Unit filename="FreeRTOS\Source\include\timers.h" />
+		<Unit filename="FreeRTOS\Source\list.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="FreeRTOS\Source\portable\GCC\ARM_CM4F\port.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="FreeRTOS\Source\portable\GCC\ARM_CM4F\portmacro.h" />
+		<Unit filename="FreeRTOS\Source\portable\MemMang\heap_4.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="FreeRTOS\Source\queue.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="FreeRTOS\Source\stream_buffer.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="FreeRTOS\Source\tasks.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="FreeRTOS\Source\timers.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="inc\app_ethernet.h" />
+		<Unit filename="inc\app_igmp.h" />
+		<Unit filename="inc\asserts.h" />
+		<Unit filename="inc\dac.h" />
+		<Unit filename="inc\ethernetif.h" />
+		<Unit filename="inc\ethernetif_mac.h" />
+		<Unit filename="inc\FreeRTOSConfig.h" />
+		<Unit filename="inc\fs.h" />
+		<Unit filename="inc\fsdata.h" />
+		<Unit filename="inc\httpserver-netconn.h" />
+		<Unit filename="inc\main.h" />
+		<Unit filename="inc\mem_stat.h" />
+		<Unit filename="inc\sip_ua.h" />
+		<Unit filename="inc\stm32f4xx_hal_conf.h" />
+		<Unit filename="inc\stm32f4xx_it.h" />
+		<Unit filename="inc\system_stm32f4xx.h" />
+		<Unit filename="inc\uart.h" />
+		<Unit filename="inc\utils.h" />
+		<Unit filename="LwIP\src\api\api_lib.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="LwIP\src\api\api_msg.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="LwIP\src\api\err.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="LwIP\src\api\netbuf.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="LwIP\src\api\netdb.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="LwIP\src\api\netifapi.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="LwIP\src\api\sockets.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="LwIP\src\api\tcpip.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="LwIP\src\core\def.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="LwIP\src\core\dhcp.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="LwIP\src\core\dns.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="LwIP\src\core\init.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="LwIP\src\core\ipv4\autoip.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="LwIP\src\core\ipv4\icmp.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="LwIP\src\core\ipv4\igmp.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="LwIP\src\core\ipv4\inet.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="LwIP\src\core\ipv4\inet_chksum.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="LwIP\src\core\ipv4\ip.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="LwIP\src\core\ipv4\ip_addr.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="LwIP\src\core\ipv4\ip_frag.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="LwIP\src\core\lwip_timers.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="LwIP\src\core\mem.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="LwIP\src\core\memp.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="LwIP\src\core\netif.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="LwIP\src\core\pbuf.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="LwIP\src\core\raw.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="LwIP\src\core\snmp\asn1_dec.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="LwIP\src\core\snmp\asn1_enc.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="LwIP\src\core\snmp\mib2.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="LwIP\src\core\snmp\mib_structs.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="LwIP\src\core\snmp\msg_in.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="LwIP\src\core\snmp\msg_out.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="LwIP\src\core\stats.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="LwIP\src\core\sys.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="LwIP\src\core\tcp.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="LwIP\src\core\tcp_in.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="LwIP\src\core\tcp_out.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="LwIP\src\core\udp.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="LwIP\src\include\ipv4\lwip\autoip.h" />
+		<Unit filename="LwIP\src\include\ipv4\lwip\icmp.h" />
+		<Unit filename="LwIP\src\include\ipv4\lwip\igmp.h" />
+		<Unit filename="LwIP\src\include\ipv4\lwip\inet.h" />
+		<Unit filename="LwIP\src\include\ipv4\lwip\inet_chksum.h" />
+		<Unit filename="LwIP\src\include\ipv4\lwip\ip.h" />
+		<Unit filename="LwIP\src\include\ipv4\lwip\ip_addr.h" />
+		<Unit filename="LwIP\src\include\ipv4\lwip\ip_frag.h" />
+		<Unit filename="LwIP\src\include\ipv6\lwip\icmp.h" />
+		<Unit filename="LwIP\src\include\ipv6\lwip\inet.h" />
+		<Unit filename="LwIP\src\include\ipv6\lwip\ip.h" />
+		<Unit filename="LwIP\src\include\ipv6\lwip\ip_addr.h" />
+		<Unit filename="LwIP\src\include\lwip\api.h" />
+		<Unit filename="LwIP\src\include\lwip\api_msg.h" />
+		<Unit filename="LwIP\src\include\lwip\arch.h" />
+		<Unit filename="LwIP\src\include\lwip\debug.h" />
+		<Unit filename="LwIP\src\include\lwip\def.h" />
+		<Unit filename="LwIP\src\include\lwip\dhcp.h" />
+		<Unit filename="LwIP\src\include\lwip\dns.h" />
+		<Unit filename="LwIP\src\include\lwip\err.h" />
+		<Unit filename="LwIP\src\include\lwip\init.h" />
+		<Unit filename="LwIP\src\include\lwip\lwip_timers.h" />
+		<Unit filename="LwIP\src\include\lwip\mem.h" />
+		<Unit filename="LwIP\src\include\lwip\memp.h" />
+		<Unit filename="LwIP\src\include\lwip\memp_std.h" />
+		<Unit filename="LwIP\src\include\lwip\netbuf.h" />
+		<Unit filename="LwIP\src\include\lwip\netdb.h" />
+		<Unit filename="LwIP\src\include\lwip\netif.h" />
+		<Unit filename="LwIP\src\include\lwip\netifapi.h" />
+		<Unit filename="LwIP\src\include\lwip\opt.h" />
+		<Unit filename="LwIP\src\include\lwip\pbuf.h" />
+		<Unit filename="LwIP\src\include\lwip\raw.h" />
+		<Unit filename="LwIP\src\include\lwip\sio.h" />
+		<Unit filename="LwIP\src\include\lwip\snmp.h" />
+		<Unit filename="LwIP\src\include\lwip\snmp_asn1.h" />
+		<Unit filename="LwIP\src\include\lwip\snmp_msg.h" />
+		<Unit filename="LwIP\src\include\lwip\snmp_structs.h" />
+		<Unit filename="LwIP\src\include\lwip\sockets.h" />
+		<Unit filename="LwIP\src\include\lwip\stats.h" />
+		<Unit filename="LwIP\src\include\lwip\sys.h" />
+		<Unit filename="LwIP\src\include\lwip\tcp.h" />
+		<Unit filename="LwIP\src\include\lwip\tcp_impl.h" />
+		<Unit filename="LwIP\src\include\lwip\tcpip.h" />
+		<Unit filename="LwIP\src\include\lwip\udp.h" />
+		<Unit filename="LwIP\src\include\lwipopts.h" />
+		<Unit filename="LwIP\src\include\netif\etharp.h" />
+		<Unit filename="LwIP\src\include\netif\ppp_oe.h" />
+		<Unit filename="LwIP\src\include\netif\slipif.h" />
+		<Unit filename="LwIP\src\include\posix\netdb.h" />
+		<Unit filename="LwIP\src\include\posix\sys\socket.h" />
+		<Unit filename="LwIP\src\netif\etharp.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="LwIP\src\netif\ppp\auth.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="LwIP\src\netif\ppp\auth.h" />
+		<Unit filename="LwIP\src\netif\ppp\chap.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="LwIP\src\netif\ppp\chap.h" />
+		<Unit filename="LwIP\src\netif\ppp\chpms.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="LwIP\src\netif\ppp\chpms.h" />
+		<Unit filename="LwIP\src\netif\ppp\fsm.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="LwIP\src\netif\ppp\fsm.h" />
+		<Unit filename="LwIP\src\netif\ppp\ipcp.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="LwIP\src\netif\ppp\ipcp.h" />
+		<Unit filename="LwIP\src\netif\ppp\lcp.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="LwIP\src\netif\ppp\lcp.h" />
+		<Unit filename="LwIP\src\netif\ppp\magic.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="LwIP\src\netif\ppp\magic.h" />
+		<Unit filename="LwIP\src\netif\ppp\md5.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="LwIP\src\netif\ppp\md5.h" />
+		<Unit filename="LwIP\src\netif\ppp\pap.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="LwIP\src\netif\ppp\pap.h" />
+		<Unit filename="LwIP\src\netif\ppp\ppp.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="LwIP\src\netif\ppp\ppp.h" />
+		<Unit filename="LwIP\src\netif\ppp\ppp_impl.h" />
+		<Unit filename="LwIP\src\netif\ppp\ppp_oe.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="LwIP\src\netif\ppp\pppdebug.h" />
+		<Unit filename="LwIP\src\netif\ppp\randm.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="LwIP\src\netif\ppp\randm.h" />
+		<Unit filename="LwIP\src\netif\ppp\vj.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="LwIP\src\netif\ppp\vj.h" />
+		<Unit filename="LwIP\src\netif\slipif.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="LwIP\system\arch\bpstruct.h" />
+		<Unit filename="LwIP\system\arch\cc.h" />
+		<Unit filename="LwIP\system\arch\cpu.h" />
+		<Unit filename="LwIP\system\arch\epstruct.h" />
+		<Unit filename="LwIP\system\arch\init.h" />
+		<Unit filename="LwIP\system\arch\lib.h" />
+		<Unit filename="LwIP\system\arch\perf.h" />
+		<Unit filename="LwIP\system\arch\sys_arch.h" />
+		<Unit filename="LwIP\system\OS\ethernetif.h" />
+		<Unit filename="LwIP\system\OS\sys_arch.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\app_ethernet.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\app_igmp.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\asserts.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\dac.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\ethernetif.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\ethernetif_mac.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\fs.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\httpserver-netconn.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\main.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\mem_stat.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\sip_ua.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\startup_stm32f429x.S">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\stm32f4xx_it.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\syscalls.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\system_stm32f4xx.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\uart.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="stm32f429zi_flash.ld" />
+		<Unit filename="STM32F4xx_HAL_Driver\Inc\Legacy\stm32_hal_legacy.h" />
+		<Unit filename="STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal.h" />
+		<Unit filename="STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_adc.h" />
+		<Unit filename="STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_adc_ex.h" />
+		<Unit filename="STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_can.h" />
+		<Unit filename="STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_cec.h" />
+		<Unit filename="STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_cortex.h" />
+		<Unit filename="STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_crc.h" />
+		<Unit filename="STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_cryp.h" />
+		<Unit filename="STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_cryp_ex.h" />
+		<Unit filename="STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_dac.h" />
+		<Unit filename="STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_dac_ex.h" />
+		<Unit filename="STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_dcmi.h" />
+		<Unit filename="STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_dcmi_ex.h" />
+		<Unit filename="STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_def.h" />
+		<Unit filename="STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_dma.h" />
+		<Unit filename="STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_dma2d.h" />
+		<Unit filename="STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_dma_ex.h" />
+		<Unit filename="STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_dsi.h" />
+		<Unit filename="STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_eth.h" />
+		<Unit filename="STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_flash.h" />
+		<Unit filename="STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_flash_ex.h" />
+		<Unit filename="STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_flash_ramfunc.h" />
+		<Unit filename="STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_fmpi2c.h" />
+		<Unit filename="STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_fmpi2c_ex.h" />
+		<Unit filename="STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_gpio.h" />
+		<Unit filename="STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_gpio_ex.h" />
+		<Unit filename="STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_hash.h" />
+		<Unit filename="STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_hash_ex.h" />
+		<Unit filename="STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_hcd.h" />
+		<Unit filename="STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_i2c.h" />
+		<Unit filename="STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_i2c_ex.h" />
+		<Unit filename="STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_i2s.h" />
+		<Unit filename="STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_i2s_ex.h" />
+		<Unit filename="STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_irda.h" />
+		<Unit filename="STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_iwdg.h" />
+		<Unit filename="STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_lptim.h" />
+		<Unit filename="STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_ltdc.h" />
+		<Unit filename="STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_ltdc_ex.h" />
+		<Unit filename="STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_nand.h" />
+		<Unit filename="STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_nor.h" />
+		<Unit filename="STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_pccard.h" />
+		<Unit filename="STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_pcd.h" />
+		<Unit filename="STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_pcd_ex.h" />
+		<Unit filename="STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_pwr.h" />
+		<Unit filename="STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_pwr_ex.h" />
+		<Unit filename="STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_qspi.h" />
+		<Unit filename="STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_rcc.h" />
+		<Unit filename="STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_rcc_ex.h" />
+		<Unit filename="STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_rng.h" />
+		<Unit filename="STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_rtc.h" />
+		<Unit filename="STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_rtc_ex.h" />
+		<Unit filename="STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_sai.h" />
+		<Unit filename="STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_sai_ex.h" />
+		<Unit filename="STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_sd.h" />
+		<Unit filename="STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_sdram.h" />
+		<Unit filename="STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_smartcard.h" />
+		<Unit filename="STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_spdifrx.h" />
+		<Unit filename="STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_spi.h" />
+		<Unit filename="STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_sram.h" />
+		<Unit filename="STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_tim.h" />
+		<Unit filename="STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_tim_ex.h" />
+		<Unit filename="STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_uart.h" />
+		<Unit filename="STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_usart.h" />
+		<Unit filename="STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_wwdg.h" />
+		<Unit filename="STM32F4xx_HAL_Driver\Inc\stm32f4xx_ll_fmc.h" />
+		<Unit filename="STM32F4xx_HAL_Driver\Inc\stm32f4xx_ll_fsmc.h" />
+		<Unit filename="STM32F4xx_HAL_Driver\Inc\stm32f4xx_ll_sdmmc.h" />
+		<Unit filename="STM32F4xx_HAL_Driver\Inc\stm32f4xx_ll_usb.h" />
+		<Unit filename="STM32F4xx_HAL_Driver\Src\stm32f4xx_hal.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_cortex.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_dac.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_dac_ex.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_dma.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_dma_ex.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_eth.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_flash.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_flash_ex.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_flash_ramfunc.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_gpio.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_pwr.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_pwr_ex.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_rcc.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_rcc_ex.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_tim.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_tim_ex.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_uart.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Extensions>
+			<code_completion />
+			<debugger>
+				<target_debugging_settings target="Debug" active_interface="ST-link">
+					<debug_interface interface_id="OpenOCD" ip_address="" ip_port="" path="" executable="" description="" dont_start_server="false" backoff_time="" options="0" reg_filter="0" active_family="" gdb_before_conn="" gdb_after_conn="" />
+					<debug_interface interface_id="ST-link" ip_address="localhost" ip_port="4242" path="${EMBITZ}\share\contrib" executable="STLinkGDB.exe" description="STM32F429x.svd" dont_start_server="false" backoff_time="1000" options="2" reg_filter="1" active_family="STMicroelectronics" gdb_before_conn="" gdb_after_conn="">
+						<family_options family_id="STMicroelectronics">
+							<option opt_id="ID_JTAG_SWD" opt_value="swd" />
+							<option opt_id="ID_VECTOR_START" opt_value="0x08000000" />
+							<option opt_id="ID_RESET_TYPE" opt_value="System" />
+							<option opt_id="ID_LOAD_PROGRAM" opt_value="1" />
+							<option opt_id="ID_SEMIHOST_CHECK" opt_value="0" />
+							<option opt_id="ID_RAM_EXEC" opt_value="0" />
+							<option opt_id="ID_VEC_TABLE" opt_value="1" />
+							<option opt_id="ID_DONT_CONN_RESET" opt_value="0" />
+							<option opt_id="ID_ALL_MODE_DEBUG" opt_value="0" />
+							<option opt_id="ID_DEV_ADDR" opt_value="" />
+							<option opt_id="ID_VERBOSE_LEVEL" opt_value="3" />
+						</family_options>
+					</debug_interface>
+				</target_debugging_settings>
+				<target_debugging_settings target="Release" active_interface="ST-link">
+					<debug_interface interface_id="ST-link" ip_address="localhost" ip_port="4242" path="${EMBITZ}\share\contrib" executable="STLinkGDB.exe" description="STM32F429x.svd" dont_start_server="false" backoff_time="1000" options="2" reg_filter="1" active_family="STMicroelectronics" gdb_before_conn="" gdb_after_conn="">
+						<family_options family_id="STMicroelectronics">
+							<option opt_id="ID_JTAG_SWD" opt_value="swd" />
+							<option opt_id="ID_VECTOR_START" opt_value="0x08000000" />
+							<option opt_id="ID_RESET_TYPE" opt_value="System" />
+							<option opt_id="ID_LOAD_PROGRAM" opt_value="1" />
+							<option opt_id="ID_SEMIHOST_CHECK" opt_value="0" />
+							<option opt_id="ID_RAM_EXEC" opt_value="0" />
+							<option opt_id="ID_VEC_TABLE" opt_value="1" />
+							<option opt_id="ID_DONT_CONN_RESET" opt_value="0" />
+							<option opt_id="ID_ALL_MODE_DEBUG" opt_value="0" />
+							<option opt_id="ID_DEV_ADDR" opt_value="" />
+							<option opt_id="ID_VERBOSE_LEVEL" opt_value="3" />
+						</family_options>
+					</debug_interface>
+				</target_debugging_settings>
+			</debugger>
+			<envvars />
+		</Extensions>
+	</Project>
+</EmBitz_project_file>
