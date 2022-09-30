@@ -101,27 +101,6 @@ int configure(void)
 {
 	int err = 0;
 
-	struct config * cfg = conf_config();
-
-#if 0
-    {
-        /* Core */
-        struct pl pollm;
-        enum poll_method method;
-        if (0 == conf_get(conf, "poll_method", &pollm)) {
-            if (0 == poll_method_type(&method, &pollm)) {
-                err = poll_method_set(method);
-                if (err) {
-                    DEBUG_WARNING("poll method (%r) set: %s\n",
-                              &pollm, strerror(err));
-                }
-            }
-            else {
-                DEBUG_WARNING("unknown poll method (%r)\n", &pollm);
-            }
-        }
-    }
-#endif
 	struct pl dummy;
 	struct pl modname;
 	pl_set_str(&dummy, "");
