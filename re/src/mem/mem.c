@@ -14,6 +14,7 @@
 #include <re_fmt.h>
 #include <re_mbuf.h>
 #include <re_mem.h>
+#include "stm32f4xx_hal.h"  /* HAL_GetTick() */
 
 
 #define DEBUG_MODULE "mem"
@@ -140,7 +141,15 @@ void *mem_alloc(size_t size, mem_destroy_h *dh)
 
 	m = pvPortMalloc(sizeof(*m) + size);
 	if (!m) {
-        printf("OOM!  ");
+        /* Reducing log rate in case of consecutive out-of-memory errors */
+        static unsigned int oom_count = 0;
+        static uint32_t tick = 0xFFFFFFFF;
+        uint32_t now = HAL_GetTick();
+        oom_count++;
+        if (tick > now || now - tick > 2000) {
+            tick = now;
+            printf("OOM: %ux\n", oom_count);
+        }
 		return NULL;
 	}
 
