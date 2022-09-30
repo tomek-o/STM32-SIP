@@ -722,7 +722,6 @@ int audio_alloc2(struct audio **ap, const struct config *cfg,
 	struct audio *a;
 	struct autx *tx;
 	struct aurx *rx;
-	struct le *le;
 	int err;
 
 	if (!ap || !cfg)

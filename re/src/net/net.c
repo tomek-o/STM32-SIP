@@ -21,7 +21,7 @@
 #define DEBUG_LEVEL 5
 #include <re_dbg.h>
 
-
+#if defined(WIN32) || defined(__WIN32__) || defined(CYGWIN)
 /**
  * Get the IP address of the host
  *
@@ -52,7 +52,7 @@ int net_hostaddr(int af, struct sa *ip)
 
 	return 0;
 }
-
+#endif
 
 /**
  * Get the default source IP address

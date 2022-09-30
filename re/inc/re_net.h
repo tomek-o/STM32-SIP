@@ -54,7 +54,9 @@ struct sa;
 
 
 /* Net generic */
+#if defined(WIN32) || defined(__WIN32__) || defined(CYGWIN)
 int  net_hostaddr(int af, struct sa *ip);
+#endif
 int  net_default_source_addr_get(int af, struct sa *ip);
 
 

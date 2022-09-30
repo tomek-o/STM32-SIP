@@ -20,7 +20,7 @@
 #define DEBUG_LEVEL 5
 #include <re_dbg.h>
 
-
+#if 0
 static int parse_resolv_conf(char *domain, size_t dsize,
 			     struct sa *srvv, uint32_t *n)
 {
@@ -77,6 +77,7 @@ static int parse_resolv_conf(char *domain, size_t dsize,
 
 	return err;
 }
+#endif
 
 
 #ifdef __ANDROID__
