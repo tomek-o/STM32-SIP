@@ -806,6 +806,9 @@ int stderr_handler(const char *p, size_t size, void *arg)
 
 void control_handler(void)
 {
+    dac_poll();
+    nullaudio_no_thread_poll();
+
 	if (app.terminating)
 	{
 		return;
@@ -1112,7 +1115,7 @@ static void sip_ua_thread(void *arg)
 		UA_CB->ChangeAppState(Callback::APP_STARTED);
 #endif
 		/* Main loop */
-		err = re_main(NULL, control_handler, 100);
+		err = re_main(NULL, control_handler, 2);
 
 	 out:
 		app_close();
@@ -1133,19 +1136,9 @@ static void sip_ua_thread(void *arg)
 	app_terminated = true;
 }
 
-static void sip_audio_thread(void *arg)
-{
-    for(;;) {
-        dac_poll();
-        nullaudio_no_thread_poll();
-        vTaskDelay(2);
-    }
-}
-
 void sip_ua_init(void)
 {
     mem_stat_dump();
-    LOG("Creating SIP UA threads...\n");
+    LOG("Creating SIP UA thread...\n");
     sys_thread_new("sip_ua_thread", sip_ua_thread, NULL, 1536 /* stack size in ints */, UDP_RX_THREAD_PRIO );
-    sys_thread_new("sip_audio_thread", sip_audio_thread, NULL, 512 /* stack size in ints */, UDP_RX_THREAD_PRIO );
 }

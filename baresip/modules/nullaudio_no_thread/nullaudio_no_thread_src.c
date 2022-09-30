@@ -34,7 +34,7 @@ static void ausrc_destructor(void *arg)
 
 	if (st->run) {
 		st->run = false;
-		int TODO__SYS_USLEEP_UNTIL_NOT_TERMINATED_TO_PREVENT_HAZARD_WITH_POLL;
+		/** \note No hazard risk on STM32 if both SIP and media are running in the same task */
 		nullaudio_no_thread_unregister(st);
 	}
 
