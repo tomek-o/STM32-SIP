@@ -8,8 +8,9 @@
 		<Option compiler="armgcc_eb" />
 		<Build>
 			<Target title="Debug">
-				<Option output="$(PROJECT_DIR)\bin\Debug\softphone.elf" />
+				<Option output="$(PROJECT_DIR)bin\Debug\softphone.elf" />
 				<Option object_output="obj\Debug\" />
+				<Option external_deps="..\re\bin\Debug\re.a;..\rem\bin\Debug\rem.a;..\baresip\bin\Debug\baresip.a;..\g722\bin\Debug\g722.a;" />
 				<Option type="0" />
 				<Option create_hex="1" />
 				<Option compiler="armgcc_eb" />
@@ -43,7 +44,7 @@
 				</Linker>
 			</Target>
 			<Target title="Release">
-				<Option output="$(PROJECT_DIR)\bin\Release\softphone.elf" />
+				<Option output="$(PROJECT_DIR)bin\Release\softphone.elf" />
 				<Option object_output="obj\Release\" />
 				<Option type="0" />
 				<Option create_hex="1" />
@@ -101,6 +102,11 @@
 			<Add option="-eb_lib=n" />
 			<Add option="-eb_start_files" />
 		</Linker>
+		<ExtraCommands>
+			<Add before="..\_build-tools\touch.exe src\version.c            REM When this is enabled arm-gdb.exe crashes!" />
+			<Mode before="0" />
+			<Mode after="0" />
+		</ExtraCommands>
 		<Unit filename="BSP\stm32f4xx_nucleo_144.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -186,6 +192,7 @@
 		<Unit filename="inc\system_stm32f4xx.h" />
 		<Unit filename="inc\uart.h" />
 		<Unit filename="inc\utils.h" />
+		<Unit filename="inc\version.h" />
 		<Unit filename="LwIP\src\api\api_lib.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -467,6 +474,9 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="src\uart.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\version.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="stm32f429zi_flash.ld" />
