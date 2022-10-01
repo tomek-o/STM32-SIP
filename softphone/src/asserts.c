@@ -1,14 +1,12 @@
 #include "asserts.h"
-#include "stm32f4xx_hal.h"
-#include "stm32f4xx_nucleo_144.h"
+#include <stdio.h>
 
 /**
   * @brief  This function is executed in case of error occurrence.
   */
 void Error_Handler(void)
 {
-  /* Turn LED2 on */
-  BSP_LED_On(LED_RED);
+  printf("\n\nError_Handler!\n\n");
   while (1)
   {
   }

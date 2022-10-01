@@ -6,7 +6,6 @@
 #endif
 
 #include "stm32f4xx_hal.h"
-#include "stm32f4xx_nucleo_144.h"
 
 
 //#define USE_DHCP       /* enable DHCP, if disabled static address is used*/

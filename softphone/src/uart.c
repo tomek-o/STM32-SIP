@@ -1,7 +1,6 @@
 #include "uart.h"
 #include "asserts.h"
 #include "stm32f4xx_hal.h"
-#include "stm32f4xx_nucleo_144.h"
 
 /* User can use this section to tailor USARTx/UARTx instance used and associated
    resources */

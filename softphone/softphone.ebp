@@ -107,10 +107,6 @@
 			<Mode before="0" />
 			<Mode after="0" />
 		</ExtraCommands>
-		<Unit filename="BSP\stm32f4xx_nucleo_144.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="BSP\stm32f4xx_nucleo_144.h" />
 		<Unit filename="CMSIS\Device\ST\STM32F4xx\Include\stm32f429xx.h" />
 		<Unit filename="CMSIS\Device\ST\STM32F4xx\Include\stm32f4xx.h" />
 		<Unit filename="CMSIS\Device\ST\STM32F4xx\Include\system_stm32f4xx.h" />

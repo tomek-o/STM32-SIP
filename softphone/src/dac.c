@@ -37,7 +37,6 @@ the timer update outputs that are also connected to different DMA streams.
 
 #include "dac.h"
 #include "stm32f4xx_hal.h"
-#include "stm32f4xx_nucleo_144.h"
 #include "stm32f4xx_hal_dac.h"
 #include "stm32f4xx_hal_tim.h"
 #include "asserts.h"
