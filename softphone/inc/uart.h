@@ -7,6 +7,8 @@ extern "C" {
 
 void uart_init(void);
 
+int uart_init_shell(void);
+
 #ifdef __cplusplus
 }
 #endif

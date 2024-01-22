@@ -182,11 +182,14 @@
 		<Unit filename="inc\httpserver-netconn.h" />
 		<Unit filename="inc\main.h" />
 		<Unit filename="inc\mem_stat.h" />
+		<Unit filename="inc\shell.h" />
+		<Unit filename="inc\shell_system.h" />
 		<Unit filename="inc\sip_ua.h" />
 		<Unit filename="inc\stm32f4xx_hal_conf.h" />
 		<Unit filename="inc\stm32f4xx_it.h" />
 		<Unit filename="inc\system_stm32f4xx.h" />
 		<Unit filename="inc\uart.h" />
+		<Unit filename="inc\uptime.h" />
 		<Unit filename="inc\utils.h" />
 		<Unit filename="inc\version.h" />
 		<Unit filename="LwIP\src\api\api_lib.c">
@@ -454,6 +457,9 @@
 		<Unit filename="src\mem_stat.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="src\shell.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="src\sip_ua.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -470,6 +476,9 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="src\uart.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\uptime.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="src\version.c">

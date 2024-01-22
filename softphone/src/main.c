@@ -10,6 +10,7 @@
 #include "uart.h"
 #include "dac.h"
 #include "sip_ua.h"
+#include "version.h"
 
 
 struct netif gnetif; /* network interface structure */
@@ -37,13 +38,18 @@ int main(void)
 
     /* Output a message on Hyperterminal using printf function */
     printf("\n*******************************************\n");
-    printf("Built: %s, %s\n", __DATE__, __TIME__);
+    printf("%s version %s\n", DEV_NAME, APP_VERSION);
+    printf("Built: %s\n", BUILD_TIMESTAMP);
 
 #ifdef USE_DHCP
     printf("Using DHCP\n");
 #else
     printf("Using static IP: %d.%d.%d.%d/%d.%d.%d.%d\n", IP_ADDR0, IP_ADDR1, IP_ADDR2, IP_ADDR3, NETMASK_ADDR0, NETMASK_ADDR1, NETMASK_ADDR2, NETMASK_ADDR3);
 #endif
+
+    if (uart_init_shell() != 0) {
+        printf("\n\nFailed to init shell!\n\n");
+    }
 
     dac_init();
 
