@@ -104,8 +104,8 @@
 			<Add option="-eb_start_files" />
 		</Linker>
 		<ExtraCommands>
-			<Add before="..\_build-tools\touch.exe src\version.c            REM When this is enabled arm-gdb.exe crashes!" />
-			<Mode before="0" />
+			<Add before="..\_build-tools\touch.exe src\version.c" />
+			<Mode before="1" />
 			<Mode after="0" />
 		</ExtraCommands>
 		<Unit filename="CMSIS\Device\ST\STM32F4xx\Include\stm32f429xx.h" />
