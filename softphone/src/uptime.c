@@ -3,6 +3,8 @@
 #include <inttypes.h>
 #include <stdio.h>
 
+static const unsigned int PERIOD = 1000;
+
 static uint32_t uptime = 0;
 
 void uptimeIncrement(void)
@@ -13,6 +15,15 @@ void uptimeIncrement(void)
 uint32_t uptimeGet(void)
 {
     return uptime;
+}
+
+void uptimeHandle(void)
+{
+    static uint32_t tickstart = 0;
+    if (HAL_GetTick() - tickstart >= PERIOD) {
+        tickstart += PERIOD;
+        uptimeIncrement();
+    }
 }
 
 static enum shell_error sh_uptime(int argc, char ** argv) {

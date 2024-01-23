@@ -4,6 +4,7 @@
 #include "dac.h"
 #include "uart.h"
 #include "mem_stat.h"
+#include "uptime.h"
 #include "cmsis_os.h"
 #include <lwip/sys.h>
 #include <re.h>
@@ -809,6 +810,7 @@ void control_handler(void)
     dac_poll();
     nullaudio_no_thread_poll();
     usart_rx_check();    // receive new shell commands
+    uptimeHandle();
 
 	if (app.terminating)
 	{
@@ -937,7 +939,7 @@ void control_handler(void)
 	}
 	case Command::RECORD: {
 		recorder_start(cmd.target.c_str(), cmd.channels,
-			static_cast<enum recorder_side>(cmd.recSide),\
+			static_cast<enum recorder_side>(cmd.recSide),
 			static_cast<enum recorder_file_format>(cmd.recFileFormat),
 			cmd.bitrate
 		);
