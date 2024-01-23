@@ -1,7 +1,10 @@
 #include "uart.h"
 #include "asserts.h"
 #include "stm32f4xx_hal.h"
+#include "stm32f4xx_ll_dma.h"
+#include "stm32f4xx_ll_usart.h"
 #include "shell_system.h"
+#include "utils.h"
 
 /* User can use this section to tailor USARTx/UARTx instance used and associated
    resources */
@@ -25,14 +28,14 @@
 #define USARTx_RX_AF                     GPIO_AF7_USART3
 
 #ifdef __GNUC__
-/* With GCC/RAISONANCE, small printf (option LD Linker->Libraries->Small printf
-   set to 'Yes') calls __io_putchar() */
+/* With GCC/RAISONANCE, small printf (option LD Linker->Libraries->Small printf set to 'Yes') calls __io_putchar() */
 #define PUTCHAR_PROTOTYPE int __io_putchar(int ch)
 #else
 #define PUTCHAR_PROTOTYPE int fputc(int ch, FILE *f)
 #endif /* __GNUC__ */
 
 static UART_HandleTypeDef UartHandle;
+static uint8_t usart_rx_dma_buffer[64];
 
 void uart_init(void)
 {
@@ -53,7 +56,9 @@ void uart_init(void)
         /* Initialization Error */
         Error_Handler();
     }
+
 #if 0
+    // FIFO: STM32 H7
     if (HAL_UARTEx_SetTxFifoThreshold(&huart1, UART_TXFIFO_THRESHOLD_1_8) != HAL_OK)
     {
         Error_Handler();
@@ -66,9 +71,28 @@ void uart_init(void)
     {
         Error_Handler();
     }
-#else
-    int TODO__STM32F429_UART_FIFO;  // brak?
 #endif
+
+    __HAL_RCC_DMA1_CLK_ENABLE();
+    LL_DMA_SetChannelSelection(DMA1, LL_DMA_STREAM_1, LL_DMA_CHANNEL_4);
+    LL_DMA_SetDataTransferDirection(DMA1, LL_DMA_STREAM_1, LL_DMA_DIRECTION_PERIPH_TO_MEMORY);
+    LL_DMA_SetStreamPriorityLevel(DMA1, LL_DMA_STREAM_1, LL_DMA_PRIORITY_LOW);
+    LL_DMA_SetMode(DMA1, LL_DMA_STREAM_1, LL_DMA_MODE_CIRCULAR);
+    LL_DMA_SetPeriphIncMode(DMA1, LL_DMA_STREAM_1, LL_DMA_PERIPH_NOINCREMENT);
+    LL_DMA_SetMemoryIncMode(DMA1, LL_DMA_STREAM_1, LL_DMA_MEMORY_INCREMENT);
+    LL_DMA_SetPeriphSize(DMA1, LL_DMA_STREAM_1, LL_DMA_PDATAALIGN_BYTE);
+    LL_DMA_SetMemorySize(DMA1, LL_DMA_STREAM_1, LL_DMA_MDATAALIGN_BYTE);
+    LL_DMA_DisableFifoMode(DMA1, LL_DMA_STREAM_1);
+    LL_DMA_SetPeriphAddress(DMA1, LL_DMA_STREAM_1, LL_USART_DMA_GetRegAddr(USARTx));
+    LL_DMA_SetMemoryAddress(DMA1, LL_DMA_STREAM_1, (uint32_t)usart_rx_dma_buffer);
+    LL_DMA_SetDataLength(DMA1, LL_DMA_STREAM_1, ARRAY_SIZE(usart_rx_dma_buffer));
+
+    LL_USART_ConfigAsyncMode(USARTx);
+    LL_USART_EnableDMAReq_RX(USARTx);
+
+    /* Enable USART and DMA */
+    LL_DMA_EnableStream(DMA1, LL_DMA_STREAM_1);
+
 }
 
 int uart_init_shell(void)
@@ -153,16 +177,33 @@ void HAL_UART_MspDeInit(UART_HandleTypeDef *huart)
     HAL_NVIC_DisableIRQ(USARTx_IRQn);
 }
 
-
-void HAL_UART_RxCpltCallback(UART_HandleTypeDef* huart)
-{
-    if(huart->Instance == USARTx)
-    {
-        shell_char_received();
-    }
-}
-
 void USART3_IRQHandler(void)
 {
     HAL_UART_IRQHandler(&UartHandle);
+}
+
+static void usart_process_data(uint8_t* buf, unsigned int len) {
+    for (unsigned int i=0; i<len; i++) {
+        shell_on_rx_char(buf[i]);
+    }
+}
+
+/** \brief Poll for UART DMA RX buffer position changes, pass new data to shell */
+void usart_rx_check(void) {
+    static size_t old_pos = 0;
+    size_t pos;
+
+    /* Calculate current position in buffer and check for new data available */
+    pos = ARRAY_SIZE(usart_rx_dma_buffer) - LL_DMA_GetDataLength(DMA1, LL_DMA_STREAM_1);
+    if (pos != old_pos) {
+        if (pos > old_pos) {
+            usart_process_data(&usart_rx_dma_buffer[old_pos], pos - old_pos);
+        } else {
+            usart_process_data(&usart_rx_dma_buffer[old_pos], ARRAY_SIZE(usart_rx_dma_buffer) - old_pos);
+            if (pos > 0) {
+                usart_process_data(&usart_rx_dma_buffer[0], pos);
+            }
+        }
+        old_pos = pos;
+    }
 }

@@ -550,9 +550,11 @@
 		<Unit filename="STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_uart.h" />
 		<Unit filename="STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_usart.h" />
 		<Unit filename="STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_wwdg.h" />
+		<Unit filename="STM32F4xx_HAL_Driver\Inc\stm32f4xx_ll_dma.h" />
 		<Unit filename="STM32F4xx_HAL_Driver\Inc\stm32f4xx_ll_fmc.h" />
 		<Unit filename="STM32F4xx_HAL_Driver\Inc\stm32f4xx_ll_fsmc.h" />
 		<Unit filename="STM32F4xx_HAL_Driver\Inc\stm32f4xx_ll_sdmmc.h" />
+		<Unit filename="STM32F4xx_HAL_Driver\Inc\stm32f4xx_ll_usart.h" />
 		<Unit filename="STM32F4xx_HAL_Driver\Inc\stm32f4xx_ll_usb.h" />
 		<Unit filename="STM32F4xx_HAL_Driver\Src\stm32f4xx_hal.c">
 			<Option compilerVar="CC" />
@@ -606,6 +608,12 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_uart.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="STM32F4xx_HAL_Driver\Src\stm32f4xx_ll_dma.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="STM32F4xx_HAL_Driver\Src\stm32f4xx_ll_usart.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Extensions>

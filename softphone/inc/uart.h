@@ -9,6 +9,8 @@ void uart_init(void);
 
 int uart_init_shell(void);
 
+void uart_rx_check(void);
+
 #ifdef __cplusplus
 }
 #endif

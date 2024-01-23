@@ -18,17 +18,14 @@ typedef struct{
 #define SHELL_FUNC_LIST_MAX_SIZE 32
 #define SHELL_CMD_MAX_SIZE 24
 #define SHELL_ARGC_MAX 8
-#define SHELL_BUFFER_SIZE 40
+#define SHELL_BUFFER_SIZE 128
 
 static UART_HandleTypeDef* shell_huart = NULL;
 
 static const char prompt[] = "$> ";
 
-static char shell_character = 0;    // character received
 static uint8_t pos = 0;             // current buffer index
 static char buf[SHELL_BUFFER_SIZE];
-static char buf_queued[SHELL_BUFFER_SIZE];
-static bool buf_queued_ready = false;
 static char backspace[] = "\b \b";
 
 static int shell_func_list_size = 0;
@@ -107,10 +104,6 @@ int shell_init(UART_HandleTypeDef* huart) {
         printf("\n\nFailed to add shell 'help' command! List full?\n\n");
 	}
 
-	if(HAL_OK != HAL_UART_Receive_IT(shell_huart, (uint8_t*)&shell_character, 1)){
-		return 1;
-	}
-
 	return 0;
 }
 
@@ -133,20 +126,23 @@ unsigned char shell_add(const char * cmd, enum shell_error (* pfunc)(int argc, c
 	return -1;
 }
 
-/** process the last character received
+/** Process the received character
  */
-uint8_t shell_char_received(void) {
+void shell_on_rx_char(uint8_t shell_character) {
 
 	switch (shell_character) {
 	case '\r':
     case '\n':
 		// ENTER key pressed
 		printf("\r\n");
-		buf[pos++] = 0;
-		memcpy(buf_queued, buf, pos);
-		pos = 0;
-        __sync_synchronize();   // full compiler barrier + ISA memory barrier
-		buf_queued_ready = true;
+		if (pos < SHELL_BUFFER_SIZE) {
+            buf[pos++] = 0;
+            shell_exec(buf);
+		} else {
+            printf("Command too long, ignored!\r\n");
+		}
+        pos = 0;
+        uart_write(prompt,strlen(prompt));
 		break;
 
 	case '\b':
@@ -159,12 +155,10 @@ uint8_t shell_char_received(void) {
 
 	default:
 		if (pos < SHELL_BUFFER_SIZE) {
-			uart_write(&shell_character, 1);
+			uart_write(&shell_character, 1);    // echo
 			buf[pos++] = shell_character;
 		}
 	}
-
-    HAL_UART_Receive_IT(shell_huart, (uint8_t*)&shell_character, 1);
 
 	return 0;
 }
@@ -217,10 +211,5 @@ uint8_t shell_exec(char * cmd) {
 }
 
 void shell_poll(void) {
-    if (buf_queued_ready == false)
-        return;
-    buf_queued_ready = false;
-    __sync_synchronize();
-	shell_exec(buf_queued);
-	uart_write(prompt,strlen(prompt));
+    usart_rx_check();
 }
