@@ -184,6 +184,7 @@
 		<Unit filename="inc\fsdata.h" />
 		<Unit filename="inc\httpserver-netconn.h" />
 		<Unit filename="inc\ip_addr_config.h" />
+		<Unit filename="inc\leds.h" />
 		<Unit filename="inc\mem_stat.h" />
 		<Unit filename="inc\shell.h" />
 		<Unit filename="inc\shell_system.h" />
@@ -455,6 +456,9 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="src\httpserver-netconn.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\leds.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="src\main.c">

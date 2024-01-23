@@ -1,5 +1,7 @@
 #include "uptime.h"
 #include "shell.h"
+#include "leds.h"
+#include "stm32f4xx_hal.h"
 #include <inttypes.h>
 #include <stdio.h>
 
@@ -23,6 +25,7 @@ void uptimeHandle(void)
     if (HAL_GetTick() - tickstart >= PERIOD) {
         tickstart += PERIOD;
         uptimeIncrement();
+        led_toggle(LED1_GREEN);
     }
 }
 
