@@ -88,6 +88,7 @@
 			<Add symbol="STM32F4" />
 			<Add symbol="_ANSI_SOURCE" />
 			<Add symbol="_TIMEVAL_DEFINED" />
+			<Add symbol="USE_FULL_LL_DRIVER" />
 			<Add directory=".\inc" />
 			<Add directory=".\src" />
 			<Add directory=".\cmsis" />
@@ -171,6 +172,7 @@
 		<Unit filename="FreeRTOS\Source\timers.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="inc\adc.h" />
 		<Unit filename="inc\app_ethernet.h" />
 		<Unit filename="inc\app_igmp.h" />
 		<Unit filename="inc\asserts.h" />
@@ -428,6 +430,9 @@
 		<Unit filename="LwIP\system\OS\sys_arch.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="src\adc.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="src\app_ethernet.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -551,10 +556,12 @@
 		<Unit filename="STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_uart.h" />
 		<Unit filename="STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_usart.h" />
 		<Unit filename="STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_wwdg.h" />
+		<Unit filename="STM32F4xx_HAL_Driver\Inc\stm32f4xx_ll_adc.h" />
 		<Unit filename="STM32F4xx_HAL_Driver\Inc\stm32f4xx_ll_dma.h" />
 		<Unit filename="STM32F4xx_HAL_Driver\Inc\stm32f4xx_ll_fmc.h" />
 		<Unit filename="STM32F4xx_HAL_Driver\Inc\stm32f4xx_ll_fsmc.h" />
 		<Unit filename="STM32F4xx_HAL_Driver\Inc\stm32f4xx_ll_sdmmc.h" />
+		<Unit filename="STM32F4xx_HAL_Driver\Inc\stm32f4xx_ll_tim.h" />
 		<Unit filename="STM32F4xx_HAL_Driver\Inc\stm32f4xx_ll_usart.h" />
 		<Unit filename="STM32F4xx_HAL_Driver\Inc\stm32f4xx_ll_usb.h" />
 		<Unit filename="STM32F4xx_HAL_Driver\Src\stm32f4xx_hal.c">
@@ -611,7 +618,16 @@
 		<Unit filename="STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_uart.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="STM32F4xx_HAL_Driver\Src\stm32f4xx_ll_adc.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="STM32F4xx_HAL_Driver\Src\stm32f4xx_ll_dma.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="STM32F4xx_HAL_Driver\Src\stm32f4xx_ll_gpio.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="STM32F4xx_HAL_Driver\Src\stm32f4xx_ll_tim.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="STM32F4xx_HAL_Driver\Src\stm32f4xx_ll_usart.c">

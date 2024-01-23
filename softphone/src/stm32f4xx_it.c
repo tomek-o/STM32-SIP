@@ -80,13 +80,6 @@ void ETH_IRQHandler(void) {
 }
 
 /**
- * @brief  This function handles DMA interrupt request.
- */
-void DMA2_Stream0_IRQHandler(void) {
-
-}
-
-/**
  * @brief  This function handles PPP interrupt request.
  */
 /*void PPP_IRQHandler(void)

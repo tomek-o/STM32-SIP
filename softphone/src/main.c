@@ -8,6 +8,7 @@
 #include "asserts.h"
 #include "uart.h"
 #include "dac.h"
+#include "adc.h"
 #include "sip_ua.h"
 #include "ip_addr_config.h"
 #include "version.h"
@@ -54,6 +55,7 @@ int main(void)
     }
 
     dac_init();
+    adc_init();
 
     /* Init thread */
     osThreadDef(Start, StartThread, osPriorityNormal, 0, configMINIMAL_STACK_SIZE * 5);

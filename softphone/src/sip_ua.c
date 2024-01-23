@@ -2,6 +2,7 @@
 #include "lwip/opt.h"
 #include "app_ethernet.h"
 #include "dac.h"
+#include "adc.h"
 #include "uart.h"
 #include "mem_stat.h"
 #include "uptime.h"
@@ -808,6 +809,7 @@ int stderr_handler(const char *p, size_t size, void *arg)
 void control_handler(void)
 {
     dac_poll();
+    adc_poll();
     nullaudio_no_thread_poll();
     usart_rx_check();    // receive new shell commands
     uptimeHandle();
