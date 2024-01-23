@@ -16,33 +16,12 @@
 
 struct auplay_st {
 	struct auplay *ap;      /* inheritance */
-	//PaStream *stream_wr;
 	auplay_write_h *wh;
 	void *arg;
 	volatile bool ready;
 };
 
 static struct auplay *auplay;
-
-
-#if 0
-static int write_callback(const void *inputBuffer, void *outputBuffer,
-			  unsigned long frameCount,
-			  const PaStreamCallbackTimeInfo *timeInfo,
-			  PaStreamCallbackFlags statusFlags, void *userData)
-{
-	struct auplay_st *st = userData;
-
-	(void)inputBuffer;
-	(void)timeInfo;
-	(void)statusFlags;
-
-	if (st->ready)
-		st->wh(outputBuffer, 2*frameCount, st->arg);
-
-	return paContinue;
-}
-#endif
 
 static void dac_cb(int16_t *samples, unsigned int samples_count, void *arg)
 {
@@ -60,8 +39,6 @@ static void auplay_destructor(void *arg)
 
 	mem_deref(st->ap);
 }
-
-
 
 static int play_alloc(struct auplay_st **stp, struct auplay *ap,
 		      struct auplay_prm *prm, const char *device,
@@ -97,19 +74,15 @@ static int play_alloc(struct auplay_st **stp, struct auplay *ap,
 	return err;
 }
 
-
 static int audio_dac_init(void)
 {
 	int err = auplay_register(&auplay, "audio_dac", play_alloc);
-
 	return err;
 }
-
 
 static int audio_dac_close(void)
 {
 	auplay = mem_deref(auplay);
-
 	return 0;
 }
 

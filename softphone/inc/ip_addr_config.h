@@ -1,11 +1,5 @@
-#ifndef __MAIN_H
-#define __MAIN_H
-
-#ifdef __cplusplus
- extern "C" {
-#endif
-
-#include "stm32f4xx_hal.h"
+#ifndef IP_ADDR_CONFIG_H
+#define IP_ADDR_CONFIG_H
 
 
 //#define USE_DHCP       /* enable DHCP, if disabled static address is used*/
@@ -13,8 +7,8 @@
 /*Static IP ADDRESS*/
 #define IP_ADDR0   192
 #define IP_ADDR1   168
-#define IP_ADDR2   10
-#define IP_ADDR3   11
+#define IP_ADDR2   0
+#define IP_ADDR3   52
 
 /*NETMASK*/
 #define NETMASK_ADDR0   255
@@ -29,8 +23,4 @@
 #define GW_ADDR3   1
 
 
-#ifdef __cplusplus
-}
 #endif
-
-#endif /* __MAIN_H */

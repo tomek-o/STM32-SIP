@@ -182,9 +182,9 @@ void USART3_IRQHandler(void)
     HAL_UART_IRQHandler(&UartHandle);
 }
 
-static void usart_process_data(uint8_t* buf, unsigned int len) {
+static void usart_process_data(const uint8_t* buf, unsigned int len) {
     for (unsigned int i=0; i<len; i++) {
-        shell_on_rx_char(buf[i]);
+        shell_on_rx_char((const char)buf[i]);
     }
 }
 

@@ -1,6 +1,5 @@
 #include "app_igmp.h"
 #include "lwip/opt.h"
-#include "main.h"
 #include "lwip/igmp.h"
 #include <stdio.h>
 

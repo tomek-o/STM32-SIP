@@ -27,7 +27,7 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "lwip/opt.h"
-#include "main.h"
+#include "ip_addr_config.h"
 #include "lwip/dhcp.h"
 #include "app_ethernet.h"
 #include "app_igmp.h"

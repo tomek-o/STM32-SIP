@@ -128,8 +128,7 @@ unsigned char shell_add(const char * cmd, enum shell_error (* pfunc)(int argc, c
 
 /** Process the received character
  */
-void shell_on_rx_char(uint8_t shell_character) {
-
+void shell_on_rx_char(const char shell_character) {
 	switch (shell_character) {
 	case '\r':
     case '\n':
@@ -159,8 +158,6 @@ void shell_on_rx_char(uint8_t shell_character) {
 			buf[pos++] = shell_character;
 		}
 	}
-
-	return 0;
 }
 
 /**
@@ -208,8 +205,4 @@ uint8_t shell_exec(char * cmd) {
 	}
 	printf("%s: command not found\r\n", cmd);
 	return -1;
-}
-
-void shell_poll(void) {
-    usart_rx_check();
 }

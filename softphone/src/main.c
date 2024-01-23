@@ -1,4 +1,3 @@
-#include "main.h"
 #include "lwip/netif.h"
 #include "lwip/tcpip.h"
 #include "cmsis_os.h"
@@ -10,7 +9,10 @@
 #include "uart.h"
 #include "dac.h"
 #include "sip_ua.h"
+#include "ip_addr_config.h"
 #include "version.h"
+
+#include "stm32f4xx_hal.h"
 
 
 struct netif gnetif; /* network interface structure */

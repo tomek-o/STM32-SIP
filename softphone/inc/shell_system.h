@@ -4,7 +4,6 @@
 #include "stm32f4xx_hal.h"
 
 int shell_init(UART_HandleTypeDef* huart);
-void shell_on_rx_char(uint8_t shell_character);
-void shell_poll(void);
+void shell_on_rx_char(const char shell_character);
 
 #endif

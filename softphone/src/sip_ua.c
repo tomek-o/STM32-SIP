@@ -1,9 +1,8 @@
 #include "sip_ua.h"
 #include "lwip/opt.h"
 #include "app_ethernet.h"
-#include "main.h"
 #include "dac.h"
-#include "shell_system.h"
+#include "uart.h"
 #include "mem_stat.h"
 #include "cmsis_os.h"
 #include <lwip/sys.h>
@@ -809,7 +808,7 @@ void control_handler(void)
 {
     dac_poll();
     nullaudio_no_thread_poll();
-    shell_poll();
+    usart_rx_check();    // receive new shell commands
 
 	if (app.terminating)
 	{
