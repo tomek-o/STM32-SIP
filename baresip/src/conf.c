@@ -34,11 +34,12 @@
 static struct conf *conf_obj;
 
 
-
+#if 0
 static void print_populated(const char *what, uint32_t n)
 {
 	(void)re_printf("Populated %u %s%s\n", n, what, 1==n ? "" : "s");
 }
+#endif
 
 
 /**
@@ -120,6 +121,9 @@ int configure(void)
 
 	// load all audio I/O modules
 	pl_set_str(&modname, "audio_dac");
+	load_module2(NULL, &modname);
+
+	pl_set_str(&modname, "audio_adc");
 	load_module2(NULL, &modname);
 
 	pl_set_str(&modname, "nullaudio_no_thread");

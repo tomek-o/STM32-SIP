@@ -12,6 +12,7 @@ extern const struct mod_export exports_presence;
 extern const struct mod_export exports_dialog_info;
 extern const struct mod_export exports_softvol;
 extern const struct mod_export exports_audio_dac;
+extern const struct mod_export exports_audio_adc;
 extern const struct mod_export exports_nullaudio_no_thread;
 
 
@@ -26,6 +27,7 @@ const struct mod_export *mod_table[] = {
 	&exports_dialog_info,
 	&exports_softvol,
 	&exports_audio_dac,
+	&exports_audio_adc,
 	&exports_nullaudio_no_thread,
 	NULL
 };
