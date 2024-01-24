@@ -3,8 +3,6 @@
 
 #include <stdint.h>
 
-enum { ADC_SAMPLING_FREQUENCY = 32000 };
-
 void adc_init(void);
 
 typedef void (adc_callback)(const int16_t *samples, unsigned int samples_count, void *arg);

@@ -54,7 +54,7 @@ the timer update outputs that are also connected to different DMA streams.
 #endif
 #	define MSG(args) (printf("DAC: "), printf args)
 
-
+enum { DAC_SAMPLING_FREQUENCY = 16000 };
 enum { DAC_OFFSET = 32768 };
 
 /* Definition for DAC clock resources */
@@ -122,8 +122,11 @@ void dac_client_unregister(void *arg) {
     for (unsigned int i=0; i<ARRAY_SIZE(clients); i++) {
         struct dac_client *c = &clients[i];
         if (c->arg == arg) {
+        #if 0
             /** \note Ugly: waiting for possible callback end to avoid hazard (st->ready was cleared earlier) */
+            /** not needed since all is single threaded for this STM32F429 configuration */
             HAL_Delay(20);
+        #endif
             memset(c, 0, sizeof(*c));
             break;
         }
@@ -217,7 +220,10 @@ void TIM6_Config(void) {
 
 	htim.Instance = TIM6;
 
-	htim.Init.Period = 90000000/DAC_SAMPLING_FREQUENCY - 1;
+    if ((SystemCoreClock/2) % DAC_SAMPLING_FREQUENCY) {
+        MSG(("\nTimer clock = %lu is not evenly divisable by DAC sampling frequency!\n", SystemCoreClock/2));
+    }
+	htim.Init.Period = ((SystemCoreClock/2)/DAC_SAMPLING_FREQUENCY) - 1;
 	htim.Init.Prescaler = 0;
 	htim.Init.ClockDivision = 0;
 	// The counter counts from 0 to the auto-reload value (contents of the TIMx_ARR register), then restarts from 0 and generates a counter overflow event.

@@ -1,6 +1,7 @@
 /** \file
 
 Audio source: ADC1 triggered by TIM8, 12-bit resolution, using DMA.
+Using PA0 as analog input pin.
 
 */
 
@@ -14,7 +15,21 @@ Audio source: ADC1 triggered by TIM8, 12-bit resolution, using DMA.
 #include "stm32f4xx_ll_dma.h"
 #include "stm32f4xx_ll_bus.h"
 #include "stm32f4xx_ll_gpio.h"
+#include <stdio.h>
+#include <assert.h>
+#include <string.h>
+#include <inttypes.h>
 
+
+#define LOCAL_DEBUG
+#ifdef LOCAL_DEBUG
+#	define TRACE(args) (printf("DAC: "), printf args)
+#else
+#	define TRACE(args)
+#endif
+#	define MSG(args) (printf("DAC: "), printf args)
+
+enum { ADC_SAMPLING_FREQUENCY = 64000 };    ///< oversampling: reducing some of the noise observed on NUCLEO-F429ZI
 static int TODO__USE_HIGH_PASS_FILTER_TO_CUT_OFF_ADC_OFFSET;
 enum { ADC_OFFSET = 32768 };
 
@@ -50,8 +65,11 @@ void adc_client_unregister(void *arg) {
     for (unsigned int i=0; i<ARRAY_SIZE(clients); i++) {
         struct adc_client *c = &clients[i];
         if (c->arg == arg) {
+        #if 0
             /** \note Ugly: waiting for possible callback end to avoid hazard (st->ready was cleared earlier) */
+            /** not needed since all is single threaded for this STM32F429 configuration */
             HAL_Delay(20);
+        #endif
             memset(c, 0, sizeof(*c));
             break;
         }
@@ -60,8 +78,10 @@ void adc_client_unregister(void *arg) {
 
 
 
-static uint16_t adcVal[ADC_SAMPLING_FREQUENCY/50];
+static uint16_t adcVal[ADC_SAMPLING_FREQUENCY/25];
 static volatile uint16_t* adcValLastPtr = NULL;
+
+static int16_t callbackBuf[ADC_SAMPLING_FREQUENCY/50] = { 0 };
 
 
 static void dma_init(void)
@@ -77,6 +97,12 @@ static void dma_init(void)
 
 static void timer_init(void)
 {
+    // TIMER8 -> APB2
+    uint32_t timer8_clock = HAL_RCC_GetPCLK2Freq() * 2;
+    if (timer8_clock % ADC_SAMPLING_FREQUENCY) {
+        MSG(("\nTimer clock = %lu is not evenly divisable by ADC sampling frequency!\n", timer8_clock));
+    }
+
     LL_TIM_InitTypeDef TIM_InitStruct = {0};
 
     /* Peripheral clock enable */
@@ -84,7 +110,7 @@ static void timer_init(void)
 
     TIM_InitStruct.Prescaler = 0;
     TIM_InitStruct.CounterMode = LL_TIM_COUNTERMODE_UP;
-    TIM_InitStruct.Autoreload = 50000;
+    TIM_InitStruct.Autoreload = (timer8_clock/ADC_SAMPLING_FREQUENCY) - 1;
     TIM_InitStruct.ClockDivision = LL_TIM_CLOCKDIVISION_DIV1;
     TIM_InitStruct.RepetitionCounter = 0;
     LL_TIM_Init(TIM8, &TIM_InitStruct);
@@ -145,7 +171,7 @@ void adc_init(void)
     LL_ADC_REG_Init(ADC1, &ADC_REG_InitStruct);
     LL_ADC_REG_SetFlagEndOfConversion(ADC1, LL_ADC_REG_FLAG_EOC_UNITARY_CONV);
     LL_ADC_DisableIT_EOCS(ADC1);
-    ADC_CommonInitStruct.CommonClock = LL_ADC_CLOCK_SYNC_PCLK_DIV8;
+    ADC_CommonInitStruct.CommonClock = LL_ADC_CLOCK_SYNC_PCLK_DIV4;
     ADC_CommonInitStruct.Multimode = LL_ADC_MULTI_INDEPENDENT;
     LL_ADC_CommonInit(__LL_ADC_COMMON_INSTANCE(ADC1), &ADC_CommonInitStruct);
     LL_ADC_REG_StartConversionExtTrig(ADC1, LL_ADC_REG_TRIG_EXT_RISING);
@@ -173,42 +199,32 @@ void adc_init(void)
 
 static void process_samples(uint16_t *samples)
 {
-#if 0
-    memset(samplesSum, 0, sizeof(samplesSum));
-    unsigned int sumPos = 0;
+    //printf("%u at tick %" PRIu32 "\n", samples[0], HAL_GetTick());
     for (unsigned int i=0; i<ARRAY_SIZE(clients); i++) {
-        struct dac_client *c = &clients[i];
-        if (c->dac_cb) {
-            memset(callbackBuf, 0, sizeof(callbackBuf));
-            unsigned int samplesCount = ARRAY_SIZE(callbackBuf) / c->samples_count_ratio;
-            c->dac_cb(callbackBuf, samplesCount, c->arg);
-            for (unsigned int j=0; j<samplesCount; j++) {
-                for (unsigned int k=0; k<c->samples_count_ratio; k++) {
-                    samplesSum[sumPos++] += callbackBuf[j];
+        struct adc_client *c = &clients[i];
+        if (c->adc_cb) {
+            const unsigned int ratio = c->samples_count_ratio;
+            unsigned int samplesCount = 0;
+            int sum = 0;
+            unsigned int sumPos = 0;
+            for (unsigned int sampleId = 0; (sampleId < ARRAY_SIZE(adcVal)/2); sampleId++) {
+                sum += samples[sampleId];
+                sumPos++;
+                if (sumPos == ratio) {
+                    callbackBuf[samplesCount++] = (sum / ratio) - ADC_OFFSET;
+                    sum = 0;
+                    sumPos = 0;
                 }
             }
+            c->adc_cb(callbackBuf, samplesCount, c->arg);
         }
     }
-    for (unsigned int i=0; i<ARRAY_SIZE(samplesSum); i++) {
-        int32_t val = samplesSum[i];
-        if (val > 32767)
-            val = 32767;
-        if (val < -32768)
-            val = 32768;
-        val += DAC_OFFSET;
-		ptr[i] = val;
-		ptr[i] |= ((uint32_t)val) << 16; //
-    }
-#else
-    int TODO__ADC_PROCESS_SAMPLES;
-
-#endif
 }
 
 void adc_poll(void)
 {
     static uint16_t* lastAdcProcessed = NULL;
-    uint16_t* newAdc = adcValLastPtr;
+    uint16_t* newAdc = (uint16_t*)adcValLastPtr;
     if (newAdc != lastAdcProcessed) {
         lastAdcProcessed = newAdc;
         // this must not be called in ISR context! assert when freeing memory

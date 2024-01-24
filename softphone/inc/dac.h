@@ -3,8 +3,6 @@
 
 #include <stdint.h>
 
-enum { DAC_SAMPLING_FREQUENCY = 32000 };
-
 void dac_init(void);
 
 typedef void (dac_callback)(int16_t *samples, unsigned int samples_count, void *arg);
