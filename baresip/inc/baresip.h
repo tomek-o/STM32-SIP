@@ -184,13 +184,13 @@ struct config {
 
 	/** Audio */
 	struct config_audio {
-		char src_mod[16];       /**< Audio source module            */
+		char src_mod[24];       /**< Audio source module            */
 		char src_dev[64];      /**< Audio source device            */
-		char play_mod[16];      /**< Audio playback module          */
+		char play_mod[24];      /**< Audio playback module          */
 		char play_dev[64];     /**< Audio playback device          */
-		char alert_mod[16];     /**< Audio alert module             */
+		char alert_mod[24];     /**< Audio alert module             */
 		char alert_dev[64];    /**< Audio alert device             */
-		char ring_mod[16];      /**< Audio module for incoming ring */
+		char ring_mod[24];      /**< Audio module for incoming ring */
 		char ring_dev[64];     /**< Audio device for incoming ring */
 		struct range srate;     /**< Audio sampling rate in [Hz]    */
 		struct range channels;  /**< Nr. of audio channels (1=mono) */
