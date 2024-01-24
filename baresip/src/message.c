@@ -165,7 +165,7 @@ int message_send(struct ua *ua, const char *peer, const char *msg, void *resp_ca
 	if (err)
 		goto out;
 
-	pl_dialbuf.p = dialbuf->buf;
+	pl_dialbuf.p = (const char*)dialbuf->buf;
 	pl_dialbuf.l = dialbuf->size;
 	err = sip_addr_decode(&addr, &pl_dialbuf);
 	if (err)
