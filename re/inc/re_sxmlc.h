@@ -37,6 +37,7 @@ extern "C" {
 #endif
 
 #include <stdio.h>
+#include <string.h>
 
 #ifdef SXMLC_UNICODE
 	typedef wchar_t SXML_CHAR;
