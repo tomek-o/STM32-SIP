@@ -44,7 +44,7 @@ void uart_init(void)
                	 BE CAREFUL : Program 7 data bits + 1 parity bit in PC HyperTerminal
      * */
     UartHandle.Instance        = USARTx;
-    UartHandle.Init.BaudRate   = 115200;
+    UartHandle.Init.BaudRate   = 921600;
     UartHandle.Init.WordLength = UART_WORDLENGTH_8B;
     UartHandle.Init.StopBits   = UART_STOPBITS_1;
     UartHandle.Init.Parity     = UART_PARITY_NONE;
