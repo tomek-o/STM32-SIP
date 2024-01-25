@@ -54,7 +54,7 @@ the timer update outputs that are also connected to different DMA streams.
 #endif
 #	define MSG(args) (printf("DAC: "), printf args)
 
-enum { DAC_SAMPLING_FREQUENCY = 16000 };
+enum { DAC_SAMPLING_FREQUENCY = 32000 };
 enum { DAC_OFFSET = 32768 };
 
 /* Definition for DAC clock resources */
@@ -133,6 +133,47 @@ void dac_client_unregister(void *arg) {
     }
 }
 
+
+struct dac_loopback_client {
+    dac_loopback_callback *dac_loopback_cb;
+    unsigned int samples_count_ratio;   ///< assuming that requested frequency would be equal to 1/N of DAC native frequency or equal to DAC native frequency itself
+    void *arg;
+};
+
+static struct dac_loopback_client loopback_clients[4] = {0};
+
+int dac_loopback_client_register(dac_loopback_callback *cb, unsigned int sampling_rate, void *arg) {
+    assert(arg != NULL);
+    if (DAC_SAMPLING_FREQUENCY % sampling_rate) {   // using trivial resampling by duplicating samples
+        MSG(("Requested loopbck sampling rate = %u is not accepted for trivial resampling\n", sampling_rate));
+        return -2;
+    }
+    for (unsigned int i=0; i<ARRAY_SIZE(loopback_clients); i++) {
+        struct dac_loopback_client *c = &loopback_clients[i];
+        if (c->arg == NULL) {
+            c->arg = arg;
+            c->samples_count_ratio = DAC_SAMPLING_FREQUENCY / sampling_rate;
+            c->dac_loopback_cb = cb;
+            return 0;
+        }
+    }
+    MSG(("Empty DAC loopback client structure not found!\n"));
+    return -1;
+}
+
+void dac_loopback_client_unregister(void *arg) {
+    assert(arg != NULL);
+    for (unsigned int i=0; i<ARRAY_SIZE(loopback_clients); i++) {
+        struct dac_loopback_client *c = &loopback_clients[i];
+        if (c->arg == arg) {
+            memset(c, 0, sizeof(*c));
+            break;
+        }
+    }
+}
+
+
+
 static void collect_samples(uint32_t *ptr) {
     memset(samplesSum, 0, sizeof(samplesSum));
     unsigned int sumPos = 0;
@@ -149,6 +190,7 @@ static void collect_samples(uint32_t *ptr) {
             }
         }
     }
+
     for (unsigned int i=0; i<ARRAY_SIZE(samplesSum); i++) {
         int32_t val = samplesSum[i];
         if (val > 32767)
@@ -157,7 +199,27 @@ static void collect_samples(uint32_t *ptr) {
             val = 32768;
         val += DAC_OFFSET;
 		ptr[i] = val;
-		ptr[i] |= ((uint32_t)val) << 16; //
+		ptr[i] |= ((uint32_t)val) << 16;
+    }
+
+    for (unsigned int i=0; i<ARRAY_SIZE(loopback_clients); i++) {
+        struct dac_loopback_client *c = &loopback_clients[i];
+        if (c->dac_loopback_cb) {
+            const unsigned int ratio = c->samples_count_ratio;
+            unsigned int samplesCount = 0;
+            int sum = 0;
+            unsigned int sumPos = 0;
+            for (unsigned int sampleId = 0; sampleId < ARRAY_SIZE(samplesSum); sampleId++) {
+                sum += samplesSum[sampleId];
+                sumPos++;
+                if (sumPos == ratio) {
+                    callbackBuf[samplesCount++] = (sum / ratio);
+                    sum = 0;
+                    sumPos = 0;
+                }
+            }
+            c->dac_loopback_cb(callbackBuf, samplesCount, c->arg);
+        }
     }
 }
 

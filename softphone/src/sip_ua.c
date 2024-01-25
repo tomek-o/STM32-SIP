@@ -504,10 +504,16 @@ static int app_init(void)
 #else
 	strncpyz(cfg->sip.local, "0.0.0.0:5060", sizeof(cfg->sip.local));
 
-#if 1
+#if 0
 	strncpyz(cfg->audio.src_mod, "audio_adc", sizeof(cfg->audio.src_mod));
-#else
+#endif
+
+#if 0
 	strncpyz(cfg->audio.src_mod, "nullaudio_no_thread", sizeof(cfg->audio.src_mod));
+#endif
+
+#if 1
+	strncpyz(cfg->audio.src_mod, "audio_dac", sizeof(cfg->audio.src_mod));  // audio loopback
 #endif
 
 	strncpyz(cfg->audio.play_mod, "audio_dac", sizeof(cfg->audio.play_mod));
