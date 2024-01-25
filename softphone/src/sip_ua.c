@@ -404,25 +404,6 @@ static int app_init(void)
 
 	struct config * cfg = conf_config();
 #if 0
-	strncpyz(cfg->audio.src_mod, appSettings.uaConf.audioCfgSrc.mod.c_str(), sizeof(cfg->audio.src_mod));
-	if (appSettings.uaConf.audioCfgSrc.mod != AudioModules::aufile &&
-		appSettings.uaConf.audioCfgSrc.mod != AudioModules::aufileMm)
-	{
-		strncpyz(cfg->audio.src_dev, appSettings.uaConf.audioCfgSrc.dev.c_str(), sizeof(cfg->audio.src_dev));
-	}
-	else
-	{
-        // aufile / aufile_mm
-		AnsiString fileFull;
-		fileFull.sprintf("%s\\%s", Paths::GetProfileDir().c_str(), appSettings.uaConf.audioCfgSrc.wavefile.c_str());
-		strncpyz(cfg->audio.src_dev, fileFull.c_str(), sizeof(cfg->audio.src_dev));
-	}
-	strncpyz(cfg->audio.play_mod, appSettings.uaConf.audioCfgPlay.mod.c_str(), sizeof(cfg->audio.play_mod));
-	strncpyz(cfg->audio.play_dev, appSettings.uaConf.audioCfgPlay.dev.c_str(), sizeof(cfg->audio.play_dev));
-	strncpyz(cfg->audio.alert_mod, appSettings.uaConf.audioCfgAlert.mod.c_str(), sizeof(cfg->audio.alert_mod));
-	strncpyz(cfg->audio.alert_dev, appSettings.uaConf.audioCfgAlert.dev.c_str(), sizeof(cfg->audio.alert_dev));
-	strncpyz(cfg->audio.ring_mod, appSettings.uaConf.audioCfgRing.mod.c_str(), sizeof(cfg->audio.ring_mod));
-	strncpyz(cfg->audio.ring_dev, appSettings.uaConf.audioCfgRing.dev.c_str(), sizeof(cfg->audio.ring_dev));
 
 	cfg->aec = (config::e_aec)appSettings.uaConf.aec;
 
@@ -470,38 +451,6 @@ static int app_init(void)
 		cfg->sip.verify_server = tls.verifyServer;
 	}
 
-	strncpyz(cfg->sip.local, appSettings.uaConf.local.c_str(), sizeof(cfg->sip.local));
-	if (appSettings.uaConf.ifname.size() > 0) {
-		strncpyz(cfg->net.ifname, appSettings.uaConf.ifname.c_str(), sizeof(cfg->net.ifname));
-	} else {
-		// try to avoid VirtualBox interface
-		cfg->net.ifname[0] = '\0';
-		std::vector<NetInterface> interfaces;
-		GetNetInterfaces(interfaces);
-		if (!interfaces.empty()) {
-			for (unsigned int i=0; i<interfaces.size(); i++) {
-				const NetInterface &netIf = interfaces[i];
-				if (netIf.ip == "0.0.0.0" || strncmp(netIf.ip.c_str(), "169.154.", strlen("169.154.")) == 0) {
-					continue;
-				}
-			#if 0
-				if (netIf.ip == "192.168.56.1") {	// VirtualBox default IP
-					continue;
-				}
-			#endif
-				AnsiString driverName = GetNetAdapterDriverName(netIf.name);
-				if (driverName.Pos("VirtualBox") > 0 ||
-					driverName.Pos("VMware") > 0 ||
-					driverName.Pos("Hyper-V") > 0 ||
-					driverName.Pos("Virtual Ethernet") > 0) {
-					continue;
-				}
-				DEBUG_WARNING("No adapter specified in config, network adapter [%s] seems to be valid to bind\n", driverName.c_str());
-				strncpyz(cfg->net.ifname, netIf.name.c_str(), sizeof(cfg->net.ifname));
-				break;
-			}
-		}
-	}
 #else
 	strncpyz(cfg->sip.local, "0.0.0.0:5060", sizeof(cfg->sip.local));
 
@@ -550,9 +499,6 @@ static int app_init(void)
 	cfg->audio.agc_rx.max_gain = appSettings.uaConf.audioAgcRx.maxGain;
 	cfg->audio.agc_rx.attack_rate = appSettings.uaConf.audioAgcRx.attackRate;
 	cfg->audio.agc_rx.release_rate = appSettings.uaConf.audioAgcRx.releaseRate;
-
-	cfg->audio.portaudioInSuggestedLatency = appSettings.uaConf.audioPortaudio.inSuggestedLatency;
-	cfg->audio.portaudioOutSuggestedLatency = appSettings.uaConf.audioPortaudio.outSuggestedLatency;
 
 	cfg->audio.loop_ring_without_silence = appSettings.uaConf.loopRingWithoutSilence;
 #endif

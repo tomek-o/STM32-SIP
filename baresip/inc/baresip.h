@@ -207,8 +207,6 @@ struct config {
 			float attack_rate;	/**<  */
 			float release_rate;
 		} agc_rx;
-		double portaudioInSuggestedLatency;
-		double portaudioOutSuggestedLatency;
 		bool loop_ring_without_silence;
 	} audio;
 
