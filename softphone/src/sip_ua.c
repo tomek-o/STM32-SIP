@@ -6,6 +6,7 @@
 #include "uart.h"
 #include "mem_stat.h"
 #include "uptime.h"
+#include "shell.h"
 #include "cmsis_os.h"
 #include <lwip/sys.h>
 #include <re.h>
@@ -21,7 +22,7 @@
 
 #define LOG printf
 
-#define UDP_RX_THREAD_PRIO  ( tskIDLE_PRIORITY + 4 )
+#define SIP_UA_THREAD_PRIO  ( tskIDLE_PRIORITY + 4 )
 
 static struct {
 	uint32_t n_uas;       /**< Number of User Agents           */
@@ -507,11 +508,9 @@ static int app_init(void)
 #if 0
 	strncpyz(cfg->audio.src_mod, "audio_adc", sizeof(cfg->audio.src_mod));
 #endif
-
 #if 0
 	strncpyz(cfg->audio.src_mod, "nullaudio_no_thread", sizeof(cfg->audio.src_mod));
 #endif
-
 #if 1
 	strncpyz(cfg->audio.src_mod, "audio_dac", sizeof(cfg->audio.src_mod));  // audio loopback
 #endif
@@ -840,6 +839,7 @@ void control_handler(void)
         int TODO__QUIT;
 #endif
 	}
+
 #if 0
 	int err;
 	Command cmd;
@@ -898,21 +898,6 @@ void control_handler(void)
 			audio_mute(audio, cmd.bEnabled);
 		}
 		break;
-	case Command::HANGUP:
-		if (app.callp)
-		{
-			ua_hangup(ua_cur(), app.callp, cmd.code, cmd.reason.c_str());
-			UA_CB->ChangeCallState(Callback::CALL_STATE_CLOSED, "", "", 0, -1, "", "", -1, "", "", "");
-			app.callp = NULL;
-		}
-		if (app.paging_txp)
-		{
-			paging_tx_hangup(app.paging_txp);
-			//mem_deref(app.paging_txp);
-			//UA_CB->ChangePagingTxState(Callback::PAGING_TX_ENDED);
-			//app.paging_txp = NULL;
-		}
-		break;
 	case Command::SET_MSG_LOGGING:
 		ua_log_messages(cmd.bEnabled, cmd.bParam);
 		break;
@@ -947,18 +932,6 @@ void control_handler(void)
 		struct config * cfg = conf_config();
 		//LOG("UaMain: START_RING2\n");
 		(void)ua_play_file2(ua, cfg->audio.ring_mod, cfg->audio.ring_dev, cmd.target.c_str());
-		break;
-	}
-	case Command::RECORD: {
-		recorder_start(cmd.target.c_str(), cmd.channels,
-			static_cast<enum recorder_side>(cmd.recSide),
-			static_cast<enum recorder_file_format>(cmd.recFileFormat),
-			cmd.bitrate
-		);
-		break;
-	}
-	case Command::RECORD_PAUSE: {
-        recorder_pause();
 		break;
 	}
 	case Command::PAGING_TX: {
@@ -1012,26 +985,6 @@ void control_handler(void)
 		}
 		break;
 	}
-	case Command::SWITCH_AUDIO_SOURCE: {
-		struct audio* a = NULL;
-		if (app.callp)
-		{
-			a = call_audio(app.callp);
-		}
-		else if (app.paging_txp)
-		{
-        	a = paging_audio(app.paging_txp);
-		}
-		if (a)
-		{
-			err = audio_set_source(a, cmd.audioMod.c_str(), cmd.audioDev.c_str());
-			if (err) {
-				DEBUG_WARNING("failed to set audio source (%m)\n", err);
-				break;
-			}
-        }
-		break;
-	}
 	case Command::SWITCH_AUDIO_PLAYER: {
 		if (app.callp)
 		{
@@ -1054,17 +1007,6 @@ void control_handler(void)
 		cfg->audio.softvol_rx = cmd.softvol;
 		break;
 	}
-	case Command::SEND_CUSTOM_REQUEST: {
-		DEBUG_WARNING("SEND_CUSTOM_REQUEST, uid = %d, method = %s\n", cmd.requestId, cmd.method.c_str());
-		err = sip_req_send(ua_cur(), cmd.method.c_str(), cmd.target.c_str(),
-					custom_req_response_handler, reinterpret_cast<void*>(cmd.requestId),
-					"%s", cmd.extraHeaderLines.c_str());
-		if (err != 0) {
-			DEBUG_WARNING("Failed send custom request (%m)\n", err);
-			UA_CB->NotifyCustomRequestStatus(cmd.requestId, err, 0, "");
-		}
-		break;
-	}
 	case Command::SEND_MESSAGE: {
 		err = message_send(ua_cur(), cmd.target.c_str(), cmd.text.c_str(), (void*)cmd.requestId);
 		DEBUG_WARNING("Sending message to %s: status = %d\n", cmd.target.c_str(), err);
@@ -1084,10 +1026,6 @@ void control_handler(void)
 				}
 			}
 		}
-		break;
-	}
-	case Command::ZRTP_VERIFY_SAS: {
-    	baresip_zrtp_verify_sas(1, cmd.bParam);
 		break;
 	}
 	default:
@@ -1155,5 +1093,64 @@ void sip_ua_init(void)
 {
     mem_stat_dump();
     LOG("Creating SIP UA thread...\n");
-    sys_thread_new("sip_ua_thread", sip_ua_thread, NULL, 1536 /* stack size in ints */, UDP_RX_THREAD_PRIO );
+    sys_thread_new("sip_ua_thread", sip_ua_thread, NULL, 1536 /* stack size in ints */, SIP_UA_THREAD_PRIO );
+}
+
+
+
+static enum shell_error sh_sipua(int argc, char ** argv) {
+    if (argc >= 2) {
+        if (strcmp(argv[1], "ausrc") == 0) {
+            if (argc >= 3) {
+                struct audio* a = NULL;
+                if (app.callp)
+                {
+                    a = call_audio(app.callp);
+                }
+                else if (app.paging_txp)
+                {
+                    a = paging_audio(app.paging_txp);
+                }
+                if (a)
+                {
+                    int err = audio_set_source(a, argv[2], "");
+                    if (err) {
+                        DEBUG_WARNING("failed to set audio source (%m)\n", err);
+                    }
+                } else {
+                    DEBUG_WARNING("No current call / stream!\n");
+                }
+            } else {
+                return SHELL_ERR_INVALID_ARG_CNT;
+            }
+        } else if (strcmp(argv[1], "hangup") == 0) {
+            if (app.callp)
+            {
+                ua_hangup(ua_cur(), app.callp, 486, "");
+                app.callp = NULL;
+            }
+            if (app.paging_txp)
+            {
+                paging_tx_hangup(app.paging_txp);
+            }
+        } else {
+            DEBUG_WARNING("Unknown subcommand [%s]\n", argv[1]);
+            return SHELL_ERR_INVALID_ARG_VAL;
+        }
+    } else {
+        return SHELL_ERR_INVALID_ARG_CNT;
+    }
+
+    return SHELL_ERR_NONE;
+}
+
+static __attribute__((constructor)) void registerCmd(void)
+{
+	shell_add("sipua", (void*)sh_sipua,
+           "Various commans for SIP User Agent. Examples:\n"
+           "sipua hangup\n"
+           "sipua ausrc audio_adc            - switch audio source for current call to ADC\n"
+           "sipua ausrc audio_dac            - switch audio source to DAC loopback\n"
+           "sipua ausrc nullaudio_no_thread  - switch audio source to silencce"
+    );
 }
