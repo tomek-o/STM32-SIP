@@ -220,3 +220,11 @@ void assert_failed(uint8_t* file, uint32_t line)
     }
 }
 #endif
+
+void vApplicationStackOverflowHook( xTaskHandle pxTask, signed char *pcTaskName )
+{
+    printf("STACK OVERFLOW!\n");
+    while (1)
+    {
+    }
+}

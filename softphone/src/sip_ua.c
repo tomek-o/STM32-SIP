@@ -1039,7 +1039,7 @@ void sip_ua_init(void)
 {
     mem_stat_dump();
     LOG("Creating SIP UA thread...\n");
-    sys_thread_new("sip_ua_thread", sip_ua_thread, NULL, 1536 /* stack size in ints */, SIP_UA_THREAD_PRIO );
+    sys_thread_new("sip_ua_thread", sip_ua_thread, NULL, 2048 /* stack size in ints */, SIP_UA_THREAD_PRIO );
 }
 
 
@@ -1094,9 +1094,9 @@ static __attribute__((constructor)) void registerCmd(void)
 {
 	shell_add("sipua", (void*)sh_sipua,
            "Various commans for SIP User Agent. Examples:\n"
-           "sipua hangup\n"
-           "sipua ausrc audio_adc            - switch audio source for current call to ADC\n"
-           "sipua ausrc audio_dac            - switch audio source to DAC loopback\n"
-           "sipua ausrc nullaudio_no_thread  - switch audio source to silencce"
+           "    sipua hangup\n"
+           "    sipua ausrc audio_adc            - switch audio source for current call to ADC\n"
+           "    sipua ausrc audio_dac            - switch audio source to DAC loopback\n"
+           "    sipua ausrc nullaudio_no_thread  - switch audio source to silencce"
     );
 }
