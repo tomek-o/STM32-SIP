@@ -36,5 +36,5 @@ static enum shell_error sh_uptime(int argc, char ** argv) {
 
 static __attribute__((constructor)) void registerCmd(void)
 {
-	shell_add("uptime", (void*)sh_uptime, "Show uptime");
+	shell_add("uptime", sh_uptime, "Show uptime");
 }

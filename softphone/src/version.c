@@ -15,5 +15,5 @@ static enum shell_error sh_version(int argc, char ** argv) {
 
 static __attribute__((constructor)) void registerCmd(void)
 {
-	shell_add("version", (void*)sh_version, "Show application version");
+	shell_add("version", sh_version, "Show application version");
 }

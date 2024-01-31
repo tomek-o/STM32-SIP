@@ -25,5 +25,5 @@ static enum shell_error sh_mem_stat_dump(int argc, char ** argv) {
 
 static __attribute__((constructor)) void registerCmd(void)
 {
-	shell_add("mem_stat_dump", (void*)sh_mem_stat_dump, "Show heap usage stats");
+	shell_add("mem_stat_dump", sh_mem_stat_dump, "Show heap usage stats");
 }

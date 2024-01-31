@@ -87,7 +87,7 @@ static enum shell_error sh_help(int argc, char ** argv) {
 	for(i = 0 ; i < shell_func_list_size ; i++) {
 		printf("%s : %s\r\n", shell_func_list[i].cmd, shell_func_list[i].description);
 	}
-	return 0;
+	return SHELL_ERR_NONE;
 }
 
 
@@ -100,7 +100,7 @@ int shell_init(UART_HandleTypeDef* huart) {
 	//uart_write(starting, strlen(starting));
 	uart_write(prompt, strlen(prompt));
 
-	if (shell_add("help", (void*)sh_help, "Show shell commands help") != 0) {
+	if (shell_add("help", sh_help, "Show shell commands help") != 0) {
         printf("\n\nFailed to add shell 'help' command! List full?\n\n");
 	}
 
@@ -163,7 +163,6 @@ void shell_on_rx_char(const char shell_character) {
 /**
  * shell_exec : search and execute the command
  * @param cmd command to process
- * @return reference to the function
  */
 uint8_t shell_exec(char * cmd) {
     if (cmd[0] == '\0')
