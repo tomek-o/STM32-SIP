@@ -9,3 +9,5 @@
 *.obj
 *.depend
 *.elay
+*.ebTemp
+*.eds

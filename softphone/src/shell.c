@@ -165,8 +165,9 @@ void shell_on_rx_char(const char shell_character) {
  * @param cmd command to process
  */
 uint8_t shell_exec(char * cmd) {
-    if (cmd[0] == '\0')
+    if (cmd[0] == '\0') {
         return -1;
+    }
 
 	int argc;
 	char * argv[SHELL_ARGC_MAX];

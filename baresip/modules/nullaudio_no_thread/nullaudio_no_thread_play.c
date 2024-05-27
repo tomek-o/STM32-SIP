@@ -47,8 +47,9 @@ static void on_poll(void *arg)
 	if (!st->run)
 	    return;
 
-    if (st->ts > now)
+    if (st->ts > now) {
         return;
+    }
 
 	if (st->wh) {
 		st->wh((uint8_t*)st->sampv, st->sampc*sizeof(int16_t), st->arg);
