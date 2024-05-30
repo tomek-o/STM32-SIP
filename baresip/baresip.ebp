@@ -160,6 +160,9 @@
 		<Unit filename="modules\stun\stun.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="modules\webrtc_aec\webrtc_aec.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="src\account.c">
 			<Option compilerVar="CC" />
 		</Unit>

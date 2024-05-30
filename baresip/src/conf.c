@@ -106,6 +106,8 @@ int configure(void)
 	struct pl modname;
 	pl_set_str(&dummy, "");
 
+	struct config *cfg = conf_config();
+
 	//dns_server_handler(&dummy, NULL);
 
 	pl_set_str(&modname, "g711");
@@ -128,6 +130,11 @@ int configure(void)
 
 	pl_set_str(&modname, "nullaudio_no_thread");
 	load_module2(NULL, &modname);
+
+    if (cfg->aec == AEC_WEBRTC) {
+		pl_set_str(&modname, "webrtc_aec");
+		load_module2(NULL, &modname);
+	}
 
 #if 0
 	if (cfg->aec == AEC_SPEEX) {

@@ -41,6 +41,7 @@
 					<Add library="..\re\bin\Debug\re.a" />
 					<Add library="..\g722\bin\Debug\g722.a" />
 					<Add library="..\speex\build\bin\Debug\speex.a" />
+					<Add library="..\webrtc\build\bin\Debug\webrtc.a" />
 					<Add library="libm.a" />
 				</Linker>
 			</Target>

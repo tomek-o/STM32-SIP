@@ -14,6 +14,7 @@ extern const struct mod_export exports_softvol;
 extern const struct mod_export exports_audio_dac;
 extern const struct mod_export exports_audio_adc;
 extern const struct mod_export exports_nullaudio_no_thread;
+extern const struct mod_export exports_webrtc_aec;
 
 
 const struct mod_export *mod_table[] = {
@@ -29,5 +30,6 @@ const struct mod_export *mod_table[] = {
 	&exports_audio_dac,
 	&exports_audio_adc,
 	&exports_nullaudio_no_thread,
+	&exports_webrtc_aec,
 	NULL
 };

@@ -92,7 +92,7 @@ static struct config core_config = {
 
 	/* WebRTC AEC */
 	{
-		120,
+		80,
 		0
 	},
 #if 0

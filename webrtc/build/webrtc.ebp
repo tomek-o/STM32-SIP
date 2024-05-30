@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<EmBitz_project_file>
+	<EmBitzVersion release="2.62" revision="0" />
+	<FileVersion major="2" minor="0" />
+	<Project>
+		<Option title="webrtc" />
+		<Option pch_mode="2" />
+		<Option compiler="armgcc_eb" />
+		<Build>
+			<Target title="Debug">
+				<Option output="bin\Debug\webrtc.a" />
+				<Option object_output="obj\Debug\" />
+				<Option type="1" />
+				<Option compiler="armgcc_eb" />
+				<Option projectDeviceOptionsRelation="0" />
+				<Compiler>
+					<Add option="-g3" />
+					<Add option="-O0" />
+					<Add option="-Wall" />
+					<Add option="-fdata-sections" />
+					<Add option="-ffunction-sections" />
+				</Compiler>
+				<Cpp>
+					<Add option="-g3" />
+					<Add option="-O0" />
+					<Add option="-Wall" />
+					<Add option="-fdata-sections" />
+					<Add option="-ffunction-sections" />
+				</Cpp>
+				<Assembler>
+					<Add option="-Wa,--gdwarf-2" />
+				</Assembler>
+				<Linker>
+					<Add option="-Wl,--gc-sections" />
+				</Linker>
+			</Target>
+			<Target title="Release">
+				<Option output="bin\Release\webrtc.a" />
+				<Option object_output="obj\Release\" />
+				<Option type="1" />
+				<Option compiler="armgcc_eb" />
+				<Option projectDeviceOptionsRelation="0" />
+				<Compiler>
+					<Add option="-O2" />
+					<Add option="-g2" />
+					<Add option="-fdata-sections" />
+					<Add option="-ffunction-sections" />
+				</Compiler>
+				<Cpp>
+					<Add option="-O2" />
+					<Add option="-g2" />
+					<Add option="-fdata-sections" />
+					<Add option="-ffunction-sections" />
+				</Cpp>
+				<Assembler>
+					<Add option="-Wa,--no-warn" />
+				</Assembler>
+				<Linker>
+					<Add option="-Wl,--gc-sections" />
+				</Linker>
+			</Target>
+		</Build>
+		<Device>
+			<Add option="$device=cortex-m4" />
+			<Add option="$fpu=fpv4-sp-d16" />
+			<Add option="$stack=0x0100" />
+			<Add option="$heap=0x0000" />
+		</Device>
+		<Compiler>
+			<Add option="-mfloat-abi=hard" />
+			<Add option="-fno-strict-aliasing" />
+			<Add symbol="ARM_MATH_CM4" />
+			<Add symbol="STM32F429ZI" />
+			<Add symbol="STM32F4XX" />
+			<Add symbol="_ANSI_SOURCE" />
+			<Add symbol="_TIMEVAL_DEFINED" />
+			<Add symbol="FLOATING_POINT" />
+			<Add symbol="FREERTOS_STM32" />
+			<Add symbol="OS_SUPPORT_CUSTOM" />
+			<Add symbol="USE_KISS_FFT" />
+			<Add directory="..\.." />
+			<Add directory="..\..\.." />
+			<Add directory=".." />
+		</Compiler>
+		<Linker>
+			<Add option="-eb_lib=n" />
+			<Add option="-eb_start_files" />
+		</Linker>
+		<Unit filename="..\common_audio\include\audio_util.h" />
+		<Unit filename="..\common_audio\signal_processing\complex_bit_reverse.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\common_audio\signal_processing\complex_fft.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\common_audio\signal_processing\complex_fft_tables.h" />
+		<Unit filename="..\common_audio\signal_processing\copy_set_operations.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\common_audio\signal_processing\cross_correlation.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\common_audio\signal_processing\downsample_fast.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\common_audio\signal_processing\energy.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\common_audio\signal_processing\get_scaling_square.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\common_audio\signal_processing\include\real_fft.h" />
+		<Unit filename="..\common_audio\signal_processing\include\signal_processing_library.h" />
+		<Unit filename="..\common_audio\signal_processing\include\spl_inl.h" />
+		<Unit filename="..\common_audio\signal_processing\min_max_operations.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\common_audio\signal_processing\randomization_functions.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\common_audio\signal_processing\real_fft.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\common_audio\signal_processing\spl_init.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\common_audio\signal_processing\spl_sqrt_floor.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\common_audio\signal_processing\vector_scaling_operations.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\modules\audio_processing\aec\aec_core.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\modules\audio_processing\aec\aec_core.h" />
+		<Unit filename="..\modules\audio_processing\aec\aec_core_internal.h" />
+		<Unit filename="..\modules\audio_processing\aec\aec_rdft.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\modules\audio_processing\aec\aec_rdft.h" />
+		<Unit filename="..\modules\audio_processing\aec\aec_resampler.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\modules\audio_processing\aec\aec_resampler.h" />
+		<Unit filename="..\modules\audio_processing\aec\echo_cancellation.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\modules\audio_processing\aec\echo_cancellation_internal.h" />
+		<Unit filename="..\modules\audio_processing\aec\include\echo_cancellation.h" />
+		<Unit filename="..\modules\audio_processing\audio_buffer.cc" />
+		<Unit filename="..\modules\audio_processing\audio_buffer.h" />
+		<Unit filename="..\modules\audio_processing\audio_processing_impl.cc" />
+		<Unit filename="..\modules\audio_processing\audio_processing_impl.h" />
+		<Unit filename="..\modules\audio_processing\echo_cancellation_impl.cc" />
+		<Unit filename="..\modules\audio_processing\echo_cancellation_impl.h" />
+		<Unit filename="..\modules\audio_processing\echo_control_mobile_impl.cc" />
+		<Unit filename="..\modules\audio_processing\echo_control_mobile_impl.h" />
+		<Unit filename="..\modules\audio_processing\gain_control_impl.cc" />
+		<Unit filename="..\modules\audio_processing\gain_control_impl.h" />
+		<Unit filename="..\modules\audio_processing\high_pass_filter_impl.cc" />
+		<Unit filename="..\modules\audio_processing\high_pass_filter_impl.h" />
+		<Unit filename="..\modules\audio_processing\include\audio_processing.h" />
+		<Unit filename="..\modules\audio_processing\include\mock_audio_processing.h" />
+		<Unit filename="..\modules\audio_processing\level_estimator_impl.cc" />
+		<Unit filename="..\modules\audio_processing\level_estimator_impl.h" />
+		<Unit filename="..\modules\audio_processing\noise_suppression_impl.cc" />
+		<Unit filename="..\modules\audio_processing\noise_suppression_impl.h" />
+		<Unit filename="..\modules\audio_processing\ns\defines.h" />
+		<Unit filename="..\modules\audio_processing\ns\include\noise_suppression.h" />
+		<Unit filename="..\modules\audio_processing\ns\include\noise_suppression_x.h" />
+		<Unit filename="..\modules\audio_processing\ns\noise_suppression.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\modules\audio_processing\ns\noise_suppression_x.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\modules\audio_processing\ns\ns_core.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\modules\audio_processing\ns\ns_core.h" />
+		<Unit filename="..\modules\audio_processing\ns\nsx_core.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\modules\audio_processing\ns\nsx_core.h" />
+		<Unit filename="..\modules\audio_processing\ns\nsx_defines.h" />
+		<Unit filename="..\modules\audio_processing\ns\windows_private.h" />
+		<Unit filename="..\modules\audio_processing\processing_component.cc" />
+		<Unit filename="..\modules\audio_processing\processing_component.h" />
+		<Unit filename="..\modules\audio_processing\splitting_filter.cc" />
+		<Unit filename="..\modules\audio_processing\splitting_filter.h" />
+		<Unit filename="..\modules\audio_processing\utility\delay_estimator.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\modules\audio_processing\utility\delay_estimator.h" />
+		<Unit filename="..\modules\audio_processing\utility\delay_estimator_internal.h" />
+		<Unit filename="..\modules\audio_processing\utility\delay_estimator_wrapper.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\modules\audio_processing\utility\delay_estimator_wrapper.h" />
+		<Unit filename="..\modules\audio_processing\utility\fft4g.h" />
+		<Unit filename="..\modules\audio_processing\utility\ring_buffer.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\modules\audio_processing\utility\ring_buffer.h" />
+		<Unit filename="..\modules\audio_processing\voice_detection_impl.cc" />
+		<Unit filename="..\modules\audio_processing\voice_detection_impl.h" />
+		<Unit filename="..\system_wrappers\interface\compile_assert.h" />
+		<Unit filename="..\system_wrappers\interface\cpu_features_wrapper.h" />
+		<Extensions>
+			<code_completion />
+			<debugger>
+				<target_debugging_settings target="Debug">
+					<debug_interface description="" options="0" reg_filter="0" probe="" device="" speed="" bus_address="" serial="" defines="" scripts="" flash_size="" ram_size="" vcc_voltage="" verbose="2682560" unwind="124237264" rstType="2682520" use_jtag="false" disable_cache="false" enable_semi="false" close_eblink="false" gdb_reset="" gdb_reset_remote="reset" gdb_before_conn="" gdb_after_conn="" use_remote="false" ip_address="localhost" ip_port="4242" path="${EMBITZ}\share\contrib" executable="STLinkGDB.exe" start_server="false" arguments="" flash_verify="false" flash_run="false" />
+				</target_debugging_settings>
+				<target_debugging_settings target="Release">
+					<debug_interface description="" options="0" reg_filter="0" probe="" device="" speed="" bus_address="" serial="" defines="" scripts="" flash_size="" ram_size="" vcc_voltage="" verbose="2682560" unwind="124237264" rstType="2682520" use_jtag="false" disable_cache="false" enable_semi="false" close_eblink="false" gdb_reset="" gdb_reset_remote="reset" gdb_before_conn="" gdb_after_conn="" use_remote="false" ip_address="localhost" ip_port="4242" path="${EMBITZ}\share\contrib" executable="STLinkGDB.exe" start_server="false" arguments="" flash_verify="false" flash_run="false" />
+				</target_debugging_settings>
+			</debugger>
+			<envvars />
+		</Extensions>
+	</Project>
+</EmBitz_project_file>
