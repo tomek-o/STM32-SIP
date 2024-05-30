@@ -38,16 +38,77 @@ static bool inited = false;
 #endif
 
 
+#ifdef STM32F4
+#define SEED 12345
+static uint32_t z1 = SEED, z2 = SEED, z3 = SEED, z4 = SEED;
+static unsigned int lfsr113 (void)
+{
+   unsigned int b;
+   b  = ((z1 << 6) ^ z1) >> 13;
+   z1 = ((z1 & 4294967294UL) << 18) ^ b;
+   b  = ((z2 << 2) ^ z2) >> 27;
+   z2 = ((z2 & 4294967288UL) << 2) ^ b;
+   b  = ((z3 << 13) ^ z3) >> 21;
+   z3 = ((z3 & 4294967280UL) << 7) ^ b;
+   b  = ((z4 << 3) ^ z4) >> 12;
+   z4 = ((z4 & 4294967168UL) << 13) ^ b;
+   return (z1 ^ z2 ^ z3 ^ z4);
+}
+
+#include "rng.h"
+#endif
+
+
 /**
  * Initialise random number generator
  */
-void rand_init(void)
+int rand_init(void)
 {
-	srand((uint32_t) tmr_jiffies());
+#if defined(STM32F4)
+    printf("rand_init\n");
+    HAL_StatusTypeDef status;
+    status = HAL_RNG_GenerateRandomNumber(&hrng, &z1);
+    if (status != HAL_OK) {
+        printf("Failed to generate random seed\n");
+        return status;
+    }
+    status = HAL_RNG_GenerateRandomNumber(&hrng, &z2);
+    if (status != HAL_OK) {
+        printf("Failed to generate random seed\n");
+        return status;
+    }
+    status = HAL_RNG_GenerateRandomNumber(&hrng, &z3);
+    if (status != HAL_OK) {
+        printf("Failed to generate random seed\n");
+        return status;
+    }
+    status = HAL_RNG_GenerateRandomNumber(&hrng, &z4);
+    if (status != HAL_OK) {
+        printf("Failed to generate random seed\n");
+        return status;
+    }
+    /**** VERY IMPORTANT **** :
+    The initial seeds z1, z2, z3, z4  MUST be larger than
+    1, 7, 15, and 127 respectively.
+    */
+    if (z1 < 2)
+        z1 = 2;
+    if (z2 < 8)
+        z2 = 8;
+    if (z3 < 16)
+        z3 = 16;
+    if (z4 < 128)
+        z4 = 128;
 
+    printf("RNG seed: z1 = %lu, z2 = %lu, z3 = %lu, z4 = %lu\n", z1, z2, z3, z4);
+    return status;
+#else
+	srand((uint32_t) tmr_jiffies());
+#endif
 #if RAND_DEBUG
 	inited = true;
 #endif
+    return 0;
 }
 
 
@@ -68,6 +129,8 @@ uint16_t rand_u16(void)
 
 #if defined(WIN32) || defined(__WIN32__)
 	return rand();
+#elif defined(STM32F4)
+    return lfsr113();
 #else
 	/* Use higher-order bits (see man 3 rand) */
 	return rand_u32() >> 16;
@@ -98,6 +161,8 @@ uint32_t rand_u32(void)
 	}
 #elif defined(WIN32) || defined(__WIN32__)
 	v = (rand() << 16) + rand(); /* note: 16-bit rand */
+#elif defined(STM32F4)
+    v = lfsr113();
 #else
 	v = rand();
 #endif

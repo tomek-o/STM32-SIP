@@ -19,7 +19,9 @@
  */
 int libre_init(void)
 {
-	rand_init();
+	int status = rand_init();
+	if (status != 0)
+	    return status;
 
 	return net_sock_init();
 }

@@ -187,6 +187,7 @@
 		<Unit filename="inc\ip_addr_config.h" />
 		<Unit filename="inc\leds.h" />
 		<Unit filename="inc\mem_stat.h" />
+		<Unit filename="inc\rng.h" />
 		<Unit filename="inc\shell.h" />
 		<Unit filename="inc\shell_system.h" />
 		<Unit filename="inc\sip_ua.h" />
@@ -468,6 +469,9 @@
 		<Unit filename="src\mem_stat.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="src\rng.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="src\shell.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -614,6 +618,9 @@
 		<Unit filename="STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_rcc_ex.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_rng.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_tim.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -642,7 +649,7 @@
 			<code_completion />
 			<debugger>
 				<target_debugging_settings target="Debug">
-					<debug_interface description="STM32F429x.svd" options="10" reg_filter="0" probe="STlink" device="auto" speed="" bus_address="" serial="" defines="" scripts="" flash_size="" ram_size="" vcc_voltage="" verbose="4" unwind="2" rstType="0" use_jtag="false" disable_cache="false" enable_semi="false" close_eblink="false" gdb_reset="" gdb_reset_remote="reset;" gdb_before_conn="" gdb_after_conn="" use_remote="false" ip_address="" ip_port="" path="" executable="" start_server="false" arguments="" flash_verify="false" flash_run="false" />
+					<debug_interface description="STM32F429x.svd" options="10" reg_filter="0" probe="STlink" device="stm32" speed="" bus_address="" serial="" defines="" scripts="" flash_size="" ram_size="" vcc_voltage="" verbose="4" unwind="2" rstType="0" use_jtag="false" disable_cache="false" enable_semi="false" close_eblink="false" gdb_reset="" gdb_reset_remote="reset;" gdb_before_conn="" gdb_after_conn="" use_remote="false" ip_address="" ip_port="" path="" executable="" start_server="false" arguments="" flash_verify="false" flash_run="false" />
 				</target_debugging_settings>
 				<target_debugging_settings target="Release">
 					<debug_interface description="STM32F429x.svd" options="2" reg_filter="1" probe="" device="" speed="" bus_address="" serial="" defines="" scripts="" flash_size="" ram_size="" vcc_voltage="" verbose="2682560" unwind="194735456" rstType="2682520" use_jtag="false" disable_cache="false" enable_semi="false" close_eblink="false" gdb_reset="" gdb_reset_remote="reset" gdb_before_conn="" gdb_after_conn="" use_remote="false" ip_address="localhost" ip_port="4242" path="${EMBITZ}\share\contrib" executable="STLinkGDB.exe" start_server="false" arguments="" flash_verify="false" flash_run="false" />

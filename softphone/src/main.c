@@ -9,6 +9,7 @@
 #include "uart.h"
 #include "dac.h"
 #include "adc.h"
+#include "rng.h"
 #include "sip_ua.h"
 #include "ip_addr_config.h"
 #include "version.h"
@@ -53,6 +54,19 @@ int main(void)
     if (uart_init_shell() != 0) {
         printf("\n\nFailed to init shell!\n\n");
     }
+
+    MX_RNG_Init();
+
+    {
+        uint32_t val;
+        int status = HAL_RNG_GenerateRandomNumber(&hrng, &val);
+        if (status != HAL_OK) {
+            printf("Failed to generate random seed for stdlib!\n");
+        } else {
+            srand(val);
+        }
+    }
+
 
     dac_init();
     adc_init();

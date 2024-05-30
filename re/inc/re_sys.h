@@ -55,7 +55,7 @@ uint64_t sys_ntohll(uint64_t v);
 
 
 /* Random */
-void     rand_init(void);
+int     rand_init(void);
 uint16_t rand_u16(void);
 uint32_t rand_u32(void);
 uint64_t rand_u64(void);
