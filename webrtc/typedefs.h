@@ -103,4 +103,11 @@ typedef unsigned __int64    uint64_t;
 #define atanf atan
 #endif
 
+#ifdef WEBRTC_SOURCE
+/* malloc / free for webrtc */
+#include <re_types.h>
+#include <re_mem.h>
+#include "FreeRTOS.h"
+#endif
+
 #endif  // WEBRTC_TYPEDEFS_H_

@@ -130,13 +130,13 @@ void WebRtc_FreeDelayEstimatorFarend(void* handle) {
     return;
   }
 
-  free(self->mean_far_spectrum);
+  mem_raw_free(self->mean_far_spectrum);
   self->mean_far_spectrum = NULL;
 
   WebRtc_FreeBinaryDelayEstimatorFarend(self->binary_farend);
   self->binary_farend = NULL;
 
-  free(self);
+  mem_raw_free(self);
 }
 
 void* WebRtc_CreateDelayEstimatorFarend(int spectrum_size, int history_size) {
@@ -147,7 +147,7 @@ void* WebRtc_CreateDelayEstimatorFarend(int spectrum_size, int history_size) {
   COMPILE_ASSERT(kBandLast - kBandFirst < 32);
 
   if (spectrum_size >= kBandLast) {
-    self = malloc(sizeof(DelayEstimator));
+    self = mem_raw_alloc(sizeof(DelayEstimator));
   }
 
   if (self != NULL) {
@@ -158,7 +158,7 @@ void* WebRtc_CreateDelayEstimatorFarend(int spectrum_size, int history_size) {
     memory_fail |= (self->binary_farend == NULL);
 
     // Allocate memory for spectrum buffers.
-    self->mean_far_spectrum = malloc(spectrum_size * sizeof(SpectrumType));
+    self->mean_far_spectrum = mem_raw_alloc(spectrum_size * sizeof(SpectrumType));
     memory_fail |= (self->mean_far_spectrum == NULL);
 
     self->spectrum_size = spectrum_size;
@@ -252,13 +252,13 @@ void WebRtc_FreeDelayEstimator(void* handle) {
     return;
   }
 
-  free(self->mean_near_spectrum);
+  mem_raw_free(self->mean_near_spectrum);
   self->mean_near_spectrum = NULL;
 
   WebRtc_FreeBinaryDelayEstimator(self->binary_handle);
   self->binary_handle = NULL;
 
-  free(self);
+  mem_raw_free(self);
 }
 
 void* WebRtc_CreateDelayEstimator(void* farend_handle, int lookahead) {
@@ -266,7 +266,7 @@ void* WebRtc_CreateDelayEstimator(void* farend_handle, int lookahead) {
   DelayEstimatorFarend* farend = (DelayEstimatorFarend*) farend_handle;
 
   if (farend_handle != NULL) {
-    self = malloc(sizeof(DelayEstimator));
+    self = mem_raw_alloc(sizeof(DelayEstimator));
   }
 
   if (self != NULL) {
@@ -278,7 +278,7 @@ void* WebRtc_CreateDelayEstimator(void* farend_handle, int lookahead) {
     memory_fail |= (self->binary_handle == NULL);
 
     // Allocate memory for spectrum buffers.
-    self->mean_near_spectrum = malloc(farend->spectrum_size *
+    self->mean_near_spectrum = mem_raw_alloc(farend->spectrum_size *
                                       sizeof(SpectrumType));
     memory_fail |= (self->mean_near_spectrum == NULL);
 

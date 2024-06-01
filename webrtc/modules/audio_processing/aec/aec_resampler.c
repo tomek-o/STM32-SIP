@@ -40,7 +40,7 @@ static int EstimateSkew(const int* rawSkew,
 
 int WebRtcAec_CreateResampler(void **resampInst)
 {
-    resampler_t *obj = malloc(sizeof(resampler_t));
+    resampler_t *obj = mem_raw_alloc(sizeof(resampler_t));
     *resampInst = obj;
     if (obj == NULL) {
         return -1;
@@ -66,7 +66,7 @@ int WebRtcAec_InitResampler(void *resampInst, int deviceSampleRateHz)
 int WebRtcAec_FreeResampler(void *resampInst)
 {
     resampler_t *obj = (resampler_t*) resampInst;
-    free(obj);
+    mem_raw_free(obj);
 
     return 0;
 }

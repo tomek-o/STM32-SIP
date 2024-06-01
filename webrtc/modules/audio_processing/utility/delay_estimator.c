@@ -65,13 +65,13 @@ void WebRtc_FreeBinaryDelayEstimatorFarend(BinaryDelayEstimatorFarend* self) {
     return;
   }
 
-  free(self->binary_far_history);
+  mem_raw_free(self->binary_far_history);
   self->binary_far_history = NULL;
 
-  free(self->far_bit_counts);
+  mem_raw_free(self->far_bit_counts);
   self->far_bit_counts = NULL;
 
-  free(self);
+  mem_raw_free(self);
 }
 
 BinaryDelayEstimatorFarend* WebRtc_CreateBinaryDelayEstimatorFarend(
@@ -80,7 +80,7 @@ BinaryDelayEstimatorFarend* WebRtc_CreateBinaryDelayEstimatorFarend(
 
   if (history_size > 1) {
     // Sanity conditions fulfilled.
-    self = malloc(sizeof(BinaryDelayEstimatorFarend));
+    self = mem_raw_alloc(sizeof(BinaryDelayEstimatorFarend));
   }
   if (self != NULL) {
     int malloc_fail = 0;
@@ -88,10 +88,10 @@ BinaryDelayEstimatorFarend* WebRtc_CreateBinaryDelayEstimatorFarend(
     self->history_size = history_size;
 
     // Allocate memory for history buffers.
-    self->binary_far_history = malloc(history_size * sizeof(uint32_t));
+    self->binary_far_history = mem_raw_alloc(history_size * sizeof(uint32_t));
     malloc_fail |= (self->binary_far_history == NULL);
 
-    self->far_bit_counts = malloc(history_size * sizeof(int));
+    self->far_bit_counts = mem_raw_alloc(history_size * sizeof(int));
     malloc_fail |= (self->far_bit_counts == NULL);
 
     if (malloc_fail) {
@@ -130,20 +130,20 @@ void WebRtc_FreeBinaryDelayEstimator(BinaryDelayEstimator* self) {
     return;
   }
 
-  free(self->mean_bit_counts);
+  mem_raw_free(self->mean_bit_counts);
   self->mean_bit_counts = NULL;
 
-  free(self->bit_counts);
+  mem_raw_free(self->bit_counts);
   self->bit_counts = NULL;
 
-  free(self->binary_near_history);
+  mem_raw_free(self->binary_near_history);
   self->binary_near_history = NULL;
 
   // BinaryDelayEstimator does not have ownership of |farend|, hence we do not
   // free the memory here. That should be handled separately by the user.
   self->farend = NULL;
 
-  free(self);
+  mem_raw_free(self);
 }
 
 BinaryDelayEstimator* WebRtc_CreateBinaryDelayEstimator(
@@ -152,7 +152,7 @@ BinaryDelayEstimator* WebRtc_CreateBinaryDelayEstimator(
 
   if ((farend != NULL) && (lookahead >= 0)) {
     // Sanity conditions fulfilled.
-    self = malloc(sizeof(BinaryDelayEstimator));
+    self = mem_raw_alloc(sizeof(BinaryDelayEstimator));
   }
 
   if (self != NULL) {
@@ -162,14 +162,14 @@ BinaryDelayEstimator* WebRtc_CreateBinaryDelayEstimator(
     self->near_history_size = lookahead + 1;
 
     // Allocate memory for spectrum buffers.
-    self->mean_bit_counts = malloc(farend->history_size * sizeof(int32_t));
+    self->mean_bit_counts = mem_raw_alloc(farend->history_size * sizeof(int32_t));
     malloc_fail |= (self->mean_bit_counts == NULL);
 
-    self->bit_counts = malloc(farend->history_size * sizeof(int32_t));
+    self->bit_counts = mem_raw_alloc(farend->history_size * sizeof(int32_t));
     malloc_fail |= (self->bit_counts == NULL);
 
     // Allocate memory for history buffers.
-    self->binary_near_history = malloc((lookahead + 1) * sizeof(uint32_t));
+    self->binary_near_history = mem_raw_alloc((lookahead + 1) * sizeof(uint32_t));
     malloc_fail |= (self->binary_near_history == NULL);
 
     if (malloc_fail) {

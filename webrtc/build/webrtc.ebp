@@ -78,9 +78,14 @@
 			<Add symbol="FREERTOS_STM32" />
 			<Add symbol="OS_SUPPORT_CUSTOM" />
 			<Add symbol="USE_KISS_FFT" />
+			<Add symbol="WEBRTC_SOURCE" />
 			<Add directory="..\.." />
 			<Add directory="..\..\.." />
 			<Add directory=".." />
+			<Add directory="..\..\re\inc" />
+			<Add directory="..\..\softphone\FreeRTOS\Source\include" />
+			<Add directory="..\..\softphone\inc" />
+			<Add directory="..\..\softphone\FreeRTOS\Source\portable\GCC\ARM_CM4F" />
 		</Compiler>
 		<Linker>
 			<Add option="-eb_lib=n" />

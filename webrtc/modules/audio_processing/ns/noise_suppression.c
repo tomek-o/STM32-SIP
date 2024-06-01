@@ -18,7 +18,7 @@
 #include "webrtc/modules/audio_processing/ns/ns_core.h"
 
 int WebRtcNs_Create(NsHandle** NS_inst) {
-  *NS_inst = (NsHandle*) malloc(sizeof(NSinst_t));
+  *NS_inst = (NsHandle*) mem_raw_alloc(sizeof(NSinst_t));
   if (*NS_inst != NULL) {
     (*(NSinst_t**)NS_inst)->initFlag = 0;
     return 0;
@@ -29,7 +29,7 @@ int WebRtcNs_Create(NsHandle** NS_inst) {
 }
 
 int WebRtcNs_Free(NsHandle* NS_inst) {
-  free(NS_inst);
+  mem_raw_free(NS_inst);
   return 0;
 }
 

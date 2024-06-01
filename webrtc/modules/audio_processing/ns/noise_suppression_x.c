@@ -17,7 +17,7 @@
 #include "webrtc/modules/audio_processing/ns/nsx_defines.h"
 
 int WebRtcNsx_Create(NsxHandle** nsxInst) {
-  NsxInst_t* self = malloc(sizeof(NsxInst_t));
+  NsxInst_t* self = mem_raw_alloc(sizeof(NsxInst_t));
   *nsxInst = (NsxHandle*)self;
 
   if (self != NULL) {
@@ -33,7 +33,7 @@ int WebRtcNsx_Create(NsxHandle** nsxInst) {
 
 int WebRtcNsx_Free(NsxHandle* nsxInst) {
   WebRtcSpl_FreeRealFFT(((NsxInst_t*)nsxInst)->real_fft);
-  free(nsxInst);
+  mem_raw_free(nsxInst);
   return 0;
 }
 

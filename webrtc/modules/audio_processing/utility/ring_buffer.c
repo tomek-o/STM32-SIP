@@ -17,6 +17,8 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "typedefs.h"
+
 enum Wrap {
   SAME_WRAP,
   DIFF_WRAP
@@ -71,14 +73,14 @@ RingBuffer* WebRtc_CreateBuffer(size_t element_count, size_t element_size) {
     return NULL;
   }
 
-  self = malloc(sizeof(RingBuffer));
+  self = mem_raw_alloc(sizeof(RingBuffer));
   if (!self) {
     return NULL;
   }
 
-  self->data = malloc(element_count * element_size);
+  self->data = mem_raw_alloc(element_count * element_size);
   if (!self->data) {
-    free(self);
+    mem_raw_free(self);
     self = NULL;
     return NULL;
   }
@@ -110,8 +112,8 @@ void WebRtc_FreeBuffer(void* handle) {
     return;
   }
 
-  free(self->data);
-  free(self);
+  mem_raw_free(self->data);
+  mem_raw_free(self);
 }
 
 size_t WebRtc_ReadBuffer(RingBuffer* self,

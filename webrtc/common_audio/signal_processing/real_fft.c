@@ -26,14 +26,14 @@ struct RealFFT* WebRtcSpl_CreateRealFFT(int order) {
     return NULL;
   }
 
-  self = malloc(sizeof(struct RealFFT));
+  self = mem_raw_alloc(sizeof(struct RealFFT));
   self->order = order;
 
   return self;
 }
 
 void WebRtcSpl_FreeRealFFT(struct RealFFT* self) {
-  free(self);
+  mem_raw_free(self);
 }
 
 // WebRtcSpl_ComplexFFT and WebRtcSpl_ComplexIFFT use in-place algorithm,

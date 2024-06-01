@@ -29,7 +29,11 @@
 #include "webrtc/typedefs.h"
 
 // Buffer size (samples)
+#if 1
 static const size_t kBufSizePartitions = 250;  // 1 second of audio in 16 kHz.
+#else
+static const size_t kBufSizePartitions = 50;
+#endif
 
 // Noise suppression
 static const int converged = 250;
@@ -158,7 +162,7 @@ static int CmpFloat(const void *a, const void *b)
 
 int WebRtcAec_CreateAec(AecCore** aecInst)
 {
-    AecCore* aec = malloc(sizeof(AecCore));
+    AecCore* aec = mem_raw_alloc(sizeof(AecCore));
     *aecInst = aec;
     if (aec == NULL) {
         return -1;
@@ -274,7 +278,7 @@ int WebRtcAec_FreeAec(AecCore* aec)
     WebRtc_FreeDelayEstimator(aec->delay_estimator);
     WebRtc_FreeDelayEstimatorFarend(aec->delay_estimator_farend);
 
-    free(aec);
+    mem_raw_free(aec);
     return 0;
 }
 

@@ -52,7 +52,7 @@ int32_t WebRtcAec_Create(void **aecInst)
         return -1;
     }
 
-    aecpc = malloc(sizeof(aecpc_t));
+    aecpc = mem_raw_alloc(sizeof(aecpc_t));
     *aecInst = aecpc;
     if (aecpc == NULL) {
         return -1;
@@ -125,7 +125,7 @@ int32_t WebRtcAec_Free(void *aecInst)
 
     WebRtcAec_FreeAec(aecpc->aec);
     WebRtcAec_FreeResampler(aecpc->resampler);
-    free(aecpc);
+    mem_raw_free(aecpc);
 
     return 0;
 }
