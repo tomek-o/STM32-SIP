@@ -21,7 +21,7 @@
 #include "rng.h"
 
 /* USER CODE BEGIN 0 */
-
+#include "asserts.h"
 /* USER CODE END 0 */
 
 RNG_HandleTypeDef hrng;
