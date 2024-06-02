@@ -246,7 +246,7 @@ static void ua_event_handler(struct ua *ua, enum ua_event ev,
 
 	case UA_EVENT_CALL_CLOSED: {
         LOG("Call closed\n");
-        mem_stat_dump();
+        mem_stat_dump(__FILE__, __LINE__);
 	}
 	break;
 
@@ -1037,7 +1037,7 @@ static void sip_ua_thread(void *arg)
 
 void sip_ua_init(void)
 {
-    mem_stat_dump();
+    mem_stat_dump(__FILE__, __LINE__);
     LOG("Creating SIP UA thread...\n");
     sys_thread_new("sip_ua_thread", sip_ua_thread, NULL, 2048 /* stack size in ints */, SIP_UA_THREAD_PRIO );
 }

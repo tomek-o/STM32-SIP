@@ -29,10 +29,18 @@
 #include "webrtc/typedefs.h"
 
 // Buffer size (samples)
-#if 1
+#if 0
 static const size_t kBufSizePartitions = 250;  // 1 second of audio in 16 kHz.
 #else
-static const size_t kBufSizePartitions = 50;
+static const size_t kBufSizePartitions = 25;
+#endif
+
+#define MEM_STAT
+#ifdef MEM_STAT
+void mem_stat_dump(const char* file, int line);
+#define MEM_STAT_DUMP(file, line) mem_stat_dump(file, line)
+#else
+#define MEM_STAT_DUMP(file, line)
 #endif
 
 // Noise suppression
@@ -162,12 +170,14 @@ static int CmpFloat(const void *a, const void *b)
 
 int WebRtcAec_CreateAec(AecCore** aecInst)
 {
+    MEM_STAT_DUMP(__FILE__, __LINE__);
     AecCore* aec = mem_raw_alloc(sizeof(AecCore));
     *aecInst = aec;
     if (aec == NULL) {
         return -1;
     }
 
+    MEM_STAT_DUMP(__FILE__, __LINE__);
     aec->nearFrBuf = WebRtc_CreateBuffer(FRAME_LEN + PART_LEN,
                                          sizeof(int16_t));
     if (!aec->nearFrBuf) {
@@ -175,6 +185,7 @@ int WebRtcAec_CreateAec(AecCore** aecInst)
         aec = NULL;
         return -1;
     }
+    MEM_STAT_DUMP(__FILE__, __LINE__);
 
     aec->outFrBuf = WebRtc_CreateBuffer(FRAME_LEN + PART_LEN,
                                         sizeof(int16_t));
@@ -200,6 +211,8 @@ int WebRtcAec_CreateAec(AecCore** aecInst)
         return -1;
     }
 
+    MEM_STAT_DUMP(__FILE__, __LINE__);
+
     // Create far-end buffers.
     aec->far_buf = WebRtc_CreateBuffer(kBufSizePartitions,
                                        sizeof(float) * 2 * PART_LEN1);
@@ -215,6 +228,9 @@ int WebRtcAec_CreateAec(AecCore** aecInst)
         aec = NULL;
         return -1;
     }
+
+    MEM_STAT_DUMP(__FILE__, __LINE__);
+
 #ifdef WEBRTC_AEC_DEBUG_DUMP
     aec->far_time_buf = WebRtc_CreateBuffer(kBufSizePartitions,
                                             sizeof(int16_t) * PART_LEN);
@@ -251,6 +267,7 @@ int WebRtcAec_CreateAec(AecCore** aecInst)
       return -1;
     }
 
+    MEM_STAT_DUMP(__FILE__, __LINE__);
     return 0;
 }
 
