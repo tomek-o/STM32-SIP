@@ -77,6 +77,7 @@ RingBuffer* WebRtc_CreateBuffer(size_t element_count, size_t element_size) {
   if (!self) {
     return NULL;
   }
+  memset(self, 0, sizeof(*self));
 
   self->data = mem_raw_alloc(element_count * element_size);
   if (!self->data) {
@@ -84,6 +85,7 @@ RingBuffer* WebRtc_CreateBuffer(size_t element_count, size_t element_size) {
     self = NULL;
     return NULL;
   }
+  memset(self->data, 0, element_count * element_size);
 
   self->element_count = element_count;
   self->element_size = element_size;
