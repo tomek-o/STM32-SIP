@@ -3,7 +3,9 @@
 Audio source: ADC1 triggered by TIM8, 12-bit resolution, using DMA.
 Using PA0 as analog input pin.
 
-Testing with MAX9814 microphone amplifier module: GAIN line connected to GND (50 dB gain).
+Testing with MAX9814 microphone amplifier module:
+    - GAIN line connected to GND (50 dB gain selected)
+    - 100 kOhm resistor desoldered (AGC disabled)
 
 */
 
