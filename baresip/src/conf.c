@@ -131,12 +131,6 @@ int configure(void)
 	pl_set_str(&modname, "nullaudio_no_thread");
 	load_module2(NULL, &modname);
 
-    if (cfg->aec == AEC_WEBRTC) {
-		pl_set_str(&modname, "webrtc_aec");
-		load_module2(NULL, &modname);
-	}
-
-#if 0
 	if (cfg->aec == AEC_SPEEX) {
 		pl_set_str(&modname, "speex_aec");
 		load_module2(NULL, &modname);
@@ -144,7 +138,7 @@ int configure(void)
 		pl_set_str(&modname, "webrtc_aec");
 		load_module2(NULL, &modname);
 	}
-
+#if 0
 	if (cfg->audio_preproc_tx.enabled) {
 		pl_set_str(&modname, "speex_pp");
 		load_module2(NULL, &modname);
