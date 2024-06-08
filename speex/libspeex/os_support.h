@@ -1,5 +1,5 @@
 /* Copyright (C) 2007 Jean-Marc Valin
-      
+
    File: os_support.h
    This is the (tiny) OS abstraction layer. Aside from math.h, this is the
    only place where system headers are allowed.
@@ -45,15 +45,21 @@
 #include "os_support_custom.h"
 #endif
 
-/** Speex wrapper for calloc. To do your own dynamic allocation, all you need to do is replace this function, speex_realloc and speex_free 
+#include "FreeRTOS.h"
+
+/** Speex wrapper for calloc. To do your own dynamic allocation, all you need to do is replace this function, speex_realloc and speex_free
     NOTE: speex_alloc needs to CLEAR THE MEMORY */
 #ifndef OVERRIDE_SPEEX_ALLOC
 static inline void *speex_alloc (int size)
 {
-   /* WARNING: this is not equivalent to malloc(). If you want to use malloc() 
+   /* WARNING: this is not equivalent to malloc(). If you want to use malloc()
       or your own allocator, YOU NEED TO CLEAR THE MEMORY ALLOCATED. Otherwise
       you will experience strange bugs */
-   return calloc(size,1);
+   //return calloc(size,1);
+   void *ptr = pvPortMalloc(size);
+   if (ptr)
+       memset(ptr, 0, size);
+   return ptr;
 }
 #endif
 
@@ -62,7 +68,11 @@ static inline void *speex_alloc (int size)
 static inline void *speex_alloc_scratch (int size)
 {
    /* Scratch space doesn't need to be cleared */
-   return calloc(size,1);
+   //return calloc(size,1);
+   void *ptr = pvPortMalloc(size);
+   if (ptr)
+       memset(ptr, 0, size);
+   return ptr;
 }
 #endif
 
@@ -70,7 +80,8 @@ static inline void *speex_alloc_scratch (int size)
 #ifndef OVERRIDE_SPEEX_REALLOC
 static inline void *speex_realloc (void *ptr, int size)
 {
-   return realloc(ptr, size);
+   //return realloc(ptr, size);
+   return pvPortRealloc(ptr, size);
 }
 #endif
 
@@ -78,7 +89,8 @@ static inline void *speex_realloc (void *ptr, int size)
 #ifndef OVERRIDE_SPEEX_FREE
 static inline void speex_free (void *ptr)
 {
-   free(ptr);
+   //free(ptr);
+   vPortFree(ptr);
 }
 #endif
 
@@ -86,7 +98,8 @@ static inline void speex_free (void *ptr)
 #ifndef OVERRIDE_SPEEX_FREE_SCRATCH
 static inline void speex_free_scratch (void *ptr)
 {
-   free(ptr);
+   //free(ptr);
+   vPortFree(ptr);
 }
 #endif
 
@@ -95,7 +108,7 @@ static inline void speex_free_scratch (void *ptr)
 #define SPEEX_COPY(dst, src, n) (memcpy((dst), (src), (n)*sizeof(*(dst)) + 0*((dst)-(src)) ))
 #endif
 
-/** Copy n bytes of memory from src to dst, allowing overlapping regions. The 0* term 
+/** Copy n bytes of memory from src to dst, allowing overlapping regions. The 0* term
     provides compile-time type checking */
 #ifndef OVERRIDE_SPEEX_MOVE
 #define SPEEX_MOVE(dst, src, n) (memmove((dst), (src), (n)*sizeof(*(dst)) + 0*((dst)-(src)) ))
