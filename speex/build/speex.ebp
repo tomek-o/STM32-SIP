@@ -86,6 +86,9 @@
 			<Add directory="..\softphone\LwIP\src\include\posix" />
 			<Add directory="..\softphone\LwIP\src\include\ipv4" />
 			<Add directory="..\include" />
+			<Add directory="..\..\softphone\FreeRTOS\Source\include" />
+			<Add directory="..\..\softphone\FreeRTOS\Source\portable\GCC\ARM_CM4F" />
+			<Add directory="..\..\softphone\inc" />
 		</Compiler>
 		<Linker>
 			<Add option="-eb_lib=n" />
@@ -273,10 +276,10 @@
 		<Extensions>
 			<code_completion />
 			<debugger>
-				<target_debugging_settings target="Release">
+				<target_debugging_settings target="Debug">
 					<debug_interface description="" options="0" reg_filter="0" probe="" device="" speed="" bus_address="" serial="" defines="" scripts="" flash_size="" ram_size="" vcc_voltage="" verbose="2682560" unwind="124237264" rstType="2682520" use_jtag="false" disable_cache="false" enable_semi="false" close_eblink="false" gdb_reset="" gdb_reset_remote="reset" gdb_before_conn="" gdb_after_conn="" use_remote="false" ip_address="localhost" ip_port="4242" path="${EMBITZ}\share\contrib" executable="STLinkGDB.exe" start_server="false" arguments="" flash_verify="false" flash_run="false" />
 				</target_debugging_settings>
-				<target_debugging_settings target="Debug">
+				<target_debugging_settings target="Release">
 					<debug_interface description="" options="0" reg_filter="0" probe="" device="" speed="" bus_address="" serial="" defines="" scripts="" flash_size="" ram_size="" vcc_voltage="" verbose="2682560" unwind="124237264" rstType="2682520" use_jtag="false" disable_cache="false" enable_semi="false" close_eblink="false" gdb_reset="" gdb_reset_remote="reset" gdb_before_conn="" gdb_after_conn="" use_remote="false" ip_address="localhost" ip_port="4242" path="${EMBITZ}\share\contrib" executable="STLinkGDB.exe" start_server="false" arguments="" flash_verify="false" flash_run="false" />
 				</target_debugging_settings>
 			</debugger>
