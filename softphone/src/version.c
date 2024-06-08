@@ -4,7 +4,7 @@
 
 const char* DEV_NAME = "STM32F429 SIP";
 
-const char* APP_VERSION = "1.0.0";
+const char* APP_VERSION = "1.1.0";
 
 const char* BUILD_TIMESTAMP = __DATE__", "__TIME__;
 
