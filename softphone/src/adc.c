@@ -3,6 +3,8 @@
 Audio source: ADC1 triggered by TIM8, 12-bit resolution, using DMA.
 Using PA0 as analog input pin.
 
+Testing with MAX9814 microphone amplifier module: GAIN line connected to GND (50 dB gain).
+
 */
 
 
@@ -217,6 +219,7 @@ static void process_samples(uint16_t *samples)
                 }
             }
             c->adc_cb(callbackBuf, samplesCount, c->arg);
+            //printf("ADC samples: %d, %d, %d, %d, %d\n", callbackBuf[0], callbackBuf[1], callbackBuf[2], callbackBuf[3], callbackBuf[4]);
         }
     }
 }
