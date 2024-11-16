@@ -1112,7 +1112,7 @@ static enum shell_error sh_sipua(int argc, char ** argv) {
 static __attribute__((constructor)) void registerCmd(void)
 {
 	shell_add("sipua", sh_sipua,
-           "Various commans for SIP User Agent. Examples:\n"
+           "Various commands for SIP User Agent. Examples:\n"
            "    sipua hangup\n"
            "    sipua ausrc audio_adc            - switch audio source for current call to ADC\n"
            "    sipua ausrc audio_dac            - switch audio source to DAC loopback\n"
