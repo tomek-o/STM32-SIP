@@ -1069,6 +1069,16 @@ static enum shell_error sh_sipua(int argc, char ** argv) {
             {
                 paging_tx_hangup(app.paging_txp);
             }
+        } else if (strcmp(argv[1], "call") == 0) {
+            if (argc >= 3) {
+                int err = ua_connect(ua_cur(), &app.callp, NULL /*from*/, argv[2], NULL, VIDMODE_OFF, "");
+                if (err)
+                {
+                    DEBUG_WARNING("connect failed: %m\n", err);
+                }
+            } else {
+                return SHELL_ERR_INVALID_ARG_CNT;
+            }
         } else {
             DEBUG_WARNING("Unknown subcommand [%s]\n", argv[1]);
             return SHELL_ERR_INVALID_ARG_VAL;
@@ -1087,6 +1097,7 @@ static __attribute__((constructor)) void registerCmd(void)
            "    sipua hangup\n"
            "    sipua ausrc audio_adc            - switch audio source for current call to ADC\n"
            "    sipua ausrc audio_dac            - switch audio source to DAC loopback\n"
-           "    sipua ausrc nullaudio_no_thread  - switch audio source to silencce"
+           "    sipua ausrc nullaudio_no_thread  - switch audio source to silencce\n"
+           "    sipua call <target>              - make call, e.g. call sip:music@iptel.org"
     );
 }
