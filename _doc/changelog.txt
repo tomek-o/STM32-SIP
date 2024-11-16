@@ -1,0 +1,13 @@
+v1.0.0
+- initial release
+
+v1.1.0
+- added simple shell with few commands
+- using DMA for UART
+- separated ip_addr_config.h and changed default address to 192.168.0.52
+- added ADC as audio source
+- changed UART baudrate to 921600
+- added audio loopback function (audio input) to audio_dac module
+- switched to EbBitz 2.62
+- using STM32 RNG and lfsr113 for rand()
+- added WebRTC AEC (unfortunately there might be not enough RAM to use it)
