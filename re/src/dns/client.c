@@ -16,6 +16,7 @@
 #include <re_tcp.h>
 #include <re_sys.h>
 #include <re_dns.h>
+#include <re_net.h>
 
 
 #define DEBUG_MODULE "dnsc"
@@ -839,6 +840,13 @@ int dnsc_alloc(struct dnsc **dcpp, const struct dnsc_conf *conf,
 {
 	struct dnsc *dnsc;
 	int err;
+#ifdef LWIP_SOCKET
+	struct sa local_sa;
+    if (net_if_getaddr4("", AF_INET, &local_sa)) {
+        DEBUG_WARNING("Error: cannot get local IP!\n");
+        return EINVAL;
+    }
+#endif
 
 	if (!dcpp)
 		return EINVAL;
@@ -856,7 +864,12 @@ int dnsc_alloc(struct dnsc **dcpp, const struct dnsc_conf *conf,
 	if (err)
 		goto out;
 
+#ifndef LWIP_SOCKET
 	err = udp_listen(&dnsc->us, NULL, udp_recv_handler, dnsc);
+#else
+    /* need local address: if local address is not set, 127.0.0.1 is selected by lwip, later message is not sent due to address mismatch with interface address */
+	err = udp_listen(&dnsc->us, &local_sa, udp_recv_handler, dnsc);
+#endif
 	if (err)
 		goto out;
 
