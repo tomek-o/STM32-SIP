@@ -47,9 +47,15 @@
 extern "C" {
 #endif
 
+/* If your port already typedef's socklen_t, define SOCKLEN_T_DEFINED
+   to prevent this code from redefining it. */
+#if !defined(socklen_t) && !defined(SOCKLEN_T_DEFINED)
+typedef u8_t socklen_t;
+#endif
+
 /* members are in network byte order */
 struct sockaddr_in {
-  u8_t sin_len;
+  socklen_t sin_len;
   u8_t sin_family;
   u16_t sin_port;
   struct in_addr sin_addr;
@@ -57,16 +63,11 @@ struct sockaddr_in {
 };
 
 struct sockaddr {
-  u8_t sa_len;
+  socklen_t sa_len;
   u8_t sa_family;
   char sa_data[14];
 };
 
-/* If your port already typedef's socklen_t, define SOCKLEN_T_DEFINED
-   to prevent this code from redefining it. */
-#if !defined(socklen_t) && !defined(SOCKLEN_T_DEFINED)
-typedef u32_t socklen_t;
-#endif
 
 /* Socket protocol types (TCP/UDP/RAW) */
 #define SOCK_STREAM     1

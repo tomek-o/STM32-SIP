@@ -507,7 +507,11 @@ static void tcp_conn_handler(int flags, void *arg)
 	if (ts->fdc >= 0)
 		(void)close(ts->fdc);
 
+#ifndef LWIP_SOCKET
 	ts->fdc = SOK_CAST accept(ts->fd, &peer.u.sa, &peer.len);
+#else
+	ts->fdc = SOK_CAST accept(ts->fd, &peer.u.sa, &peer.u.len);
+#endif
 	if (-1 == ts->fdc) {
 
 #if TARGET_OS_IPHONE
@@ -1264,7 +1268,11 @@ int tcp_sock_local_get(const struct tcp_sock *ts, struct sa *local)
 
 	sa_init(local, AF_UNSPEC);
 
+#ifndef LWIP_SOCKET
 	if (getsockname(ts->fd, &local->u.sa, &local->len) < 0) {
+#else
+	if (getsockname(ts->fd, &local->u.sa, &local->u.len) < 0) {
+#endif
 		DEBUG_WARNING("local get: getsockname(): %m\n", errno);
 		return errno;
 	}
@@ -1288,7 +1296,11 @@ int tcp_conn_local_get(const struct tcp_conn *tc, struct sa *local)
 
 	sa_init(local, AF_UNSPEC);
 
+#ifndef LWIP_SOCKET
 	if (getsockname(tc->fdc, &local->u.sa, &local->len) < 0) {
+#else
+	if (getsockname(tc->fdc, &local->u.sa, &local->u.len) < 0) {
+#endif
 		DEBUG_WARNING("conn local get: getsockname(): %m\n", errno);
 		return errno;
 	}
@@ -1312,7 +1324,11 @@ int tcp_conn_peer_get(const struct tcp_conn *tc, struct sa *peer)
 
 	sa_init(peer, AF_UNSPEC);
 
+#ifndef LWIP_SOCKET
 	if (getpeername(tc->fdc, &peer->u.sa, &peer->len) < 0) {
+#else
+	if (getpeername(tc->fdc, &peer->u.sa, &peer->u.len) < 0) {
+#endif
 		DEBUG_WARNING("conn peer get: getpeername(): %m\n", errno);
 		return errno;
 	}

@@ -49,8 +49,14 @@ struct sa {
 #ifdef HAVE_INET6
 		struct sockaddr_in6 in6;
 #endif
+
+#ifdef LWIP_SOCKET
+        socklen_t len;
+#endif
 	} u;
+#ifndef LWIP_SOCKET
 	socklen_t len;
+#endif
 };
 
 void     sa_init(struct sa *sa, int af);

@@ -137,10 +137,21 @@ static void udp_read(struct udp_sock *us, int fd)
 	if (!mb)
 		return;
 
+#ifndef LWIP_SOCKET
 	src.len = sizeof(src.u);
+#else
+	src.u.len = sizeof(src.u);
+#endif
+
+#ifndef LWIP_SOCKET
 	n = recvfrom(fd, BUF_CAST mb->buf + us->rx_presz,
 		     mb->size - us->rx_presz, 0,
 		     &src.u.sa, &src.len);
+#else
+	n = recvfrom(fd, BUF_CAST mb->buf + us->rx_presz,
+		     mb->size - us->rx_presz, 0,
+		     &src.u.sa, &src.u.len);
+#endif
 	if (n < 0) {
 		err = errno;
 
@@ -456,7 +467,11 @@ static int udp_send_internal(struct udp_sock *us, const struct sa *dst,
 
 	/* Connected socket? */
 	if (us->conn) {
+#ifndef LWIP_SOCKET
 		if (0 != connect(fd, &dst->u.sa, dst->len)) {
+#else
+		if (0 != connect(fd, &dst->u.sa, dst->u.len)) {
+#endif
 			DEBUG_WARNING("send: connect: %m\n", errno);
 			us->conn = false;
 		}
@@ -466,8 +481,13 @@ static int udp_send_internal(struct udp_sock *us, const struct sa *dst,
 			return errno;
 	}
 	else {
+#ifndef LWIP_SOCKET
 		if (sendto(fd, BUF_CAST mb->buf + mb->pos, mb->end - mb->pos,
 			   0, &dst->u.sa, dst->len) < 0)
+#else
+		if (sendto(fd, BUF_CAST mb->buf + mb->pos, mb->end - mb->pos,
+			   0, &dst->u.sa, dst->u.len) < 0)
+#endif
 			return errno;
 	}
 
@@ -535,12 +555,24 @@ int udp_local_get(const struct udp_sock *us, struct sa *local)
 	if (!us || !local)
 		return EINVAL;
 
+#ifndef LWIP_SOCKET
 	local->len = sizeof(local->u);
+#else
+	local->u.len = sizeof(local->u);
+#endif
 
+#ifndef LWIP_SOCKET
 	if (0 == getsockname(us->fd, &local->u.sa, &local->len))
+#else
+	if (0 == getsockname(us->fd, &local->u.sa, &local->u.len))
+#endif
 		return 0;
 
+#ifndef LWIP_SOCKET
 	if (0 == getsockname(us->fd6, &local->u.sa, &local->len))
+#else
+	if (0 == getsockname(us->fd6, &local->u.sa, &local->u.len))
+#endif
 		return 0;
 
 	return errno;

@@ -29,7 +29,11 @@ void sa_init(struct sa *sa, int af)
 
 	memset(sa, 0, sizeof(*sa));
 	sa->u.sa.sa_family = af;
+#ifndef LWIP_SOCKET
 	sa->len = sizeof(sa->u);
+#else
+	sa->u.len = sizeof(sa->u);
+#endif
 }
 
 
@@ -75,13 +79,21 @@ int sa_set_str(struct sa *sa, const char *addr, uint16_t port)
 
 	case AF_INET:
 		sa->u.in.sin_port = htons(port);
-		sa->len = sizeof(struct sockaddr_in);
+#ifndef LWIP_SOCKET
+        sa->len = sizeof(struct sockaddr_in);
+#else
+        sa->u.len = sizeof(struct sockaddr_in);
+#endif
 		break;
 
 #ifdef HAVE_INET6
 	case AF_INET6:
 		sa->u.in6.sin6_port = htons(port);
-		sa->len = sizeof(struct sockaddr_in6);
+#ifndef LWIP_SOCKET
+        sa->len = sizeof(struct sockaddr_in6);
+#else
+        sa->u.len = sizeof(struct sockaddr_in6);
+#endif
 		break;
 #endif
 
@@ -110,7 +122,11 @@ void sa_set_in(struct sa *sa, uint32_t addr, uint16_t port)
 	sa->u.in.sin_family = AF_INET;
 	sa->u.in.sin_addr.s_addr = htonl(addr);
 	sa->u.in.sin_port = htons(port);
-	sa->len = sizeof(struct sockaddr_in);
+#ifndef LWIP_SOCKET
+    sa->len = sizeof(struct sockaddr_in);
+#else
+    sa->u.len = sizeof(struct sockaddr_in);
+#endif
 }
 
 
@@ -157,7 +173,11 @@ int sa_set_sa(struct sa *sa, const struct sockaddr *s)
 
 	case AF_INET:
 		memcpy(&sa->u.in, s, sizeof(struct sockaddr_in));
-		sa->len = sizeof(struct sockaddr_in);
+#ifndef LWIP_SOCKET
+        sa->len = sizeof(struct sockaddr_in);
+#else
+        sa->u.len = sizeof(struct sockaddr_in);
+#endif
 		break;
 
 #ifdef HAVE_INET6
