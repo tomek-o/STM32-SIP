@@ -176,7 +176,7 @@ int net_init(const struct config_net *cfg, int af)
 	}
 
 	sa_init(&net.laddr, AF_INET);
-	(void)sa_set_str(&net.laddr, "127.0.0.1", 0);
+	(void)sa_set_str(&net.laddr, "0.0.0.0", 0);
 
 	if (str_isset(cfg->ifname)) {
 
