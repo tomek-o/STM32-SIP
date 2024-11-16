@@ -153,8 +153,19 @@ int dns_srv_get(char *domain, size_t dsize, struct sa *srvv, uint32_t *n)
 	err = get_android_dns(srvv, n);
 #endif
 
-    int TODO__LWIP_NETCONN_DNS;
 
+    int TODO__LWIP_NETCONN_DNS;
+#if 0
     err = -1;
+#else
+    if (*n < 2) {
+        DEBUG_WARNING("DNS array too small!\n");
+        return -1;
+    }
+    sa_set_str(&srvv[0], "8.8.8.8", 53);
+    sa_set_str(&srvv[1], "1.1.1.1", 53);
+    *n = 2;
+    err = 0;
+#endif
 	return err;
 }
