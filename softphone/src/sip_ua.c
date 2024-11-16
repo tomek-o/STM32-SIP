@@ -524,16 +524,6 @@ static int app_init(void)
 
 	configure();
 
-#if 0
-	/* Initialise User Agents */
-	AnsiString uaName;
-	if (appSettings.uaConf.customUserAgent == false) {
-		uaName.sprintf("%s %s", Branding::appName.c_str(), GetFileVer(Application->ExeName).c_str());
-	} else {
-		uaName = appSettings.uaConf.userAgent.c_str();
-    }
-#endif
-
 	err = ua_init("baresip-STM32", true, false, false, false);
 	if (err)
 		return err;
@@ -694,47 +684,6 @@ static int app_start(void)
 		DEBUG_WARNING("No valid SIP account found - check your config\n");
 		return ENOENT;
 	}
-#if 0
-	if (appSettings.uaConf.accounts.size() != 1)
-	{
-		DEBUG_WARNING("Multiple accounts not handled!\n");
-	}
-	if (appSettings.uaConf.accounts.size() > 0)
-	{
-		UaConf::Account &acc = appSettings.uaConf.accounts[0];
-		for (int i=0; i<appSettings.uaConf.contacts.size(); i++) {
-			UaConf::Contact contact = appSettings.uaConf.contacts[i];
-			if (contact.user == "")
-			{
-				continue;
-			}
-			AnsiString addr;
-			if (contact.user.find("sip:") != std::string::npos)
-			{
-				addr.sprintf("<%s>", contact.user.c_str());
-			}
-			else
-			{
-				addr.sprintf("<sip:%s@%s;transport=%s>",
-					contact.user.c_str(),
-					acc.reg_server.c_str(),
-					acc.getTransportStr()
-					);
-			}
-			if (contact.sub_dialog_info)
-			{
-				addr.cat_printf(";dlginfo=p2p;dlginfo_expires=%d", contact.sub_dialog_info_expires);
-			}
-			if (contact.sub_presence)
-			{
-				addr.cat_printf(";presence=p2p;presence_expires=%d", contact.sub_presence_expires);
-			}
-			pl pl_addr;
-			pl_set_str(&pl_addr, addr.c_str());
-			contact_add(NULL, &pl_addr, i, dialog_info_handler, presence_handler);
-		}
-	}
-#endif
 
 	// contact list must be initialized here
 	pl_set_str(&modname, "dialog-info");
