@@ -34,7 +34,7 @@
 int net_if_getaddr4(const char *ifname, int af, struct sa *ip)
 {
     extern struct netif gnetif;
-    sa_set_in(ip, gnetif.ip_addr.addr, 0);
+    sa_set_in(ip, ntohl(gnetif.ip_addr.addr), 0);
 	return 0;
 }
 
