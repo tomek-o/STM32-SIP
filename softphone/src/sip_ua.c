@@ -581,6 +581,7 @@ static int app_start(void)
 	struct pl modname;
 
 	app.n_uas = 0;
+
 #if 0
 	for (int i=0; i<appSettings.uaConf.accounts.size(); i++)
 	{
@@ -664,6 +665,8 @@ static int app_start(void)
 		}
 	}
 #else
+
+#if 0   // local account
     char addr[96];
     unsigned int IPaddress = gnetif.ip_addr.addr;
 	snprintf(addr, sizeof(addr), "<sip:baresip@%u.%u.%u.%u;transport=UDP>;regint=0;ptime=20;answer_any=1",
@@ -678,7 +681,26 @@ static int app_start(void)
     {
         DEBUG_WARNING("Failed to add account\n");
     }
+#else   // testing DNS
+    char addr[96];
+    const char* SERVER = "YOUR_SERVER";
+    const char* USERNAME = "YOUR_USER";
+    const char* PASSWORD = "YOUR_PASSWORD";
+	snprintf(addr, sizeof(addr), "<sip:%s@%s;transport=udp>;regint=60;ptime=20;answer_any=1", USERNAME, SERVER);
+    struct pl pl_addr;
+    pl_set_str(&pl_addr, addr);
+    if (ua_add(&pl_addr, PASSWORD, USERNAME) == 0)
+    {
+        app.n_uas++;
+    }
+    else
+    {
+        DEBUG_WARNING("Failed to add account\n");
+    }
 #endif
+
+#endif
+
 	if (!app.n_uas)
 	{
 		DEBUG_WARNING("No valid SIP account found - check your config\n");
