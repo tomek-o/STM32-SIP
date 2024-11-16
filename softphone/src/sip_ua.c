@@ -250,6 +250,25 @@ static void ua_event_handler(struct ua *ua, enum ua_event ev,
 	}
 	break;
 
+	case UA_EVENT_REGISTERING:
+		LOG("Registering account...\n");
+		break;
+	case UA_EVENT_REGISTER_OK:
+		LOG("Account registered\n");
+		break;
+	case UA_EVENT_REGISTER_FAIL:
+        LOG("Failed to register account\n");
+		break;
+	case UA_EVENT_UNREGISTERING:
+		LOG("Unregistering account...\n");
+		break;
+	case UA_EVENT_UNREGISTER_OK:
+		LOG("Account unregistered\n");
+		break;
+	case UA_EVENT_UNREGISTER_FAIL:
+		LOG("Account unregister error\n");
+		break;
+
 	default:
     break;
 	}
