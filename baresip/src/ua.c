@@ -1790,6 +1790,10 @@ int ua_print_supported(struct re_printf *pf, const struct ua *ua)
 	size_t i;
 	int err;
 
+	/* an empty "Supported:" header breaks some peers - omit it */
+	if (ua->extensionc == 0)
+		return 0;
+
 	err = re_hprintf(pf, "Supported:");
 
 	for (i=0; i<ua->extensionc; i++) {
