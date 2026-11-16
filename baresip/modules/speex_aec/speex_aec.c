@@ -11,6 +11,10 @@
 #include <baresip.h>
 
 
+#ifndef SPEEX_AEC_TAIL_FRAMES
+#define SPEEX_AEC_TAIL_FRAMES 4  /* 4 x 20 ms = 80 ms (was 10 = 200 ms) */
+#endif
+
 #define DEBUG_MODULE "speex_aec"
 #define DEBUG_LEVEL 5
 #include <re_dbg.h>
@@ -88,8 +92,9 @@ static int aec_alloc(struct speex_st **stp, void **ctx, struct aufilt_prm *prm)
 		goto out;
 	}
 
-	/* Echo canceller with 200 ms tail length */
-	fl = 10 * prm->frame_size;
+	/* Echo tail length in frames (1 frame = ptime, typ. 20 ms).
+	 * RAM use of speex MDF scales ~linearly with this value. */
+	fl = SPEEX_AEC_TAIL_FRAMES * prm->frame_size;
 	st->state = speex_echo_state_init(prm->frame_size, fl);
 	if (!st->state) {
 		err = ENOMEM;
